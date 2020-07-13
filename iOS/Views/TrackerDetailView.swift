@@ -24,11 +24,13 @@ struct TrackerDetailView: View {
     var body: some View {
 		VStack {
 			MapView(coordinates: viewModel.points.map { $0.toCLLocationCoordinate }, mode: .viewing)
+				.accessibility(identifier: "MapView")
 			List {
 				ForEach(viewModel.points, id: \.self) { point in
 					PointRow(viewModel: point)
 				}
 			}
+			.accessibility(identifier: "PointList")
 		}
 		.navigationBarTitle(Text("\(viewModel.name)"), displayMode: .inline)
 		.navigationBarItems(trailing: shareButton)
