@@ -8,7 +8,6 @@
 
 import SwiftUI
 import CoreLocation
-//import GeoTrackerCore
 
 struct TrackerDetailView: View {
 	var viewModel: TrackerViewModel
@@ -24,7 +23,7 @@ struct TrackerDetailView: View {
 	
     var body: some View {
 		VStack {
-			MapView(coordinate: viewModel.points.first?.toCLLocationCoordinate ?? CLLocationCoordinate2D(latitude: 0, longitude: 0))
+			MapView(coordinates: viewModel.points.map { $0.toCLLocationCoordinate }, mode: .viewing)
 			List {
 				ForEach(viewModel.points, id: \.self) { point in
 					PointRow(viewModel: point)

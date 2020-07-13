@@ -88,7 +88,7 @@ final class PreviewGenerator {
 				return
 			}
 
-			let finalImage = snapshot.drawPolyline(polyLine, color: UIColor.blue, lineWidth: 3)
+			let finalImage = snapshot.drawPolyline(polyLine, color: UIColor.systemBlue, lineWidth: 3)
 			self?.imageCache.setObject(finalImage, forKey: id as NSString)
 			DispatchQueue.main.async {
 				completion(finalImage)

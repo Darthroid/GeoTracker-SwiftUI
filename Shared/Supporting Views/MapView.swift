@@ -14,7 +14,7 @@ struct MapView {
 		case viewing, recording
 	}
 	
-	@State var polyline: MKPolyline?
+	/*@State*/ var polyline: MKPolyline?
 	
 	@State var coordinates: [CLLocationCoordinate2D] = []
 	
@@ -24,10 +24,62 @@ struct MapView {
 		MKMapView(frame: .zero)
 	}
 	
+	func makeCoordinator() -> Coordinator {
+		Coordinator(self)
+	}
+	
 	func updateMapView(_ view: MKMapView, context: Context) {
-//		let span = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
-//		let region = MKCoordinateRegion(center: coordinate, span: span)
-//		view.setRegion(region, animated: false)
+		self.drawPolyline(view, with: self.coordinates)
+	}
+	
+	/// Draws polyline on map from coordiantes.
+	/// - Parameters:
+	///   - coordinates: Coordinates array for drwaing polyline.
+	///   - center: Boolean value indicating whether map needs to be centered on polyline.
+	///   - animated: Boolean value indicating whether centering on polyline should be animated.
+	func drawPolyline(_ view: MKMapView, with coordinates: [CLLocationCoordinate2D], center: Bool = true, animated: Bool = true) {
+		view.removeOverlays(view.overlays)
+		let polyLine = MKPolyline(coordinates: coordinates, count: coordinates.count)
+
+		view.addOverlay(polyLine)
+
+		guard center else { return }
+
+		let centerBlock = {
+			let overlays = view.overlays
+			if let topOverlay = overlays.first(where: { $0 is MKPolyline }) {
+				let rect = overlays.reduce(topOverlay.boundingMapRect, { $0.union($1.boundingMapRect) })
+					let edgePadding = UIEdgeInsets(
+						top: 50.0,
+						left: 50.0,
+						bottom: 50.0,
+						right: 50.0
+					)
+				
+					view.setVisibleMapRect(
+						rect,
+						edgePadding: edgePadding,
+						animated: animated
+					)
+			}
+		}
+
+		if animated {
+			UIView.animate(withDuration: 1.5, animations: {
+				centerBlock()
+			})
+		} else {
+			centerBlock()
+		}
+	}
+	
+	func addAnnotation(_ view: MKMapView, coordinate: CLLocationCoordinate2D, title: String? = nil, subtitle: String? = nil) {
+		let annoatation = MKPointAnnotation()
+		annoatation.coordinate = coordinate
+		annoatation.title = title
+		annoatation.subtitle = subtitle
+
+		view.addAnnotation(annoatation)
 	}
 }
 
@@ -35,7 +87,9 @@ struct MapView {
 
 extension MapView: NSViewRepresentable {
 	func makeNSView(context: Context) -> MKMapView {
-		makeMapView()
+		let map = makeMapView()
+		map.delegate = context.coordinator
+		return map
 	}
 	
 	func updateNSView(_ nsView: MKMapView, context: Context) {
@@ -47,7 +101,9 @@ extension MapView: NSViewRepresentable {
 
 extension MapView: UIViewRepresentable {
 	func makeUIView(context: Context) -> MKMapView {
-		makeMapView()
+		let map = makeMapView()
+		map.delegate = context.coordinator
+		return map
 	}
 	
 	func updateUIView(_ uiView: MKMapView, context: Context) {
@@ -63,3 +119,24 @@ struct MapView_Previews: PreviewProvider {
 	}
 }
 
+// MARK: - Coordinator
+
+final class Coordinator: NSObject {
+	var control: MapView
+
+	init(_ control: MapView) {
+		self.control = control
+	}
+}
+
+extension Coordinator: MKMapViewDelegate {
+	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+		guard let polyline = overlay as? MKPolyline else {
+			return MKOverlayRenderer(overlay: overlay)
+		}
+		let renderer = MKPolylineRenderer(polyline: polyline)
+		renderer.strokeColor = .systemBlue
+		renderer.lineWidth = 4
+		return renderer
+	}
+}
