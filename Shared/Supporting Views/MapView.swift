@@ -19,7 +19,9 @@ struct MapView {
 	var mode: MapMode
 
 	func makeMapView() -> MKMapView {
-		MKMapView(frame: .zero)
+		let map = MKMapView(frame: .zero)
+		map.accessibilityIdentifier = "MapView"
+		return map
 	}
 	
 	func makeCoordinator() -> Coordinator {

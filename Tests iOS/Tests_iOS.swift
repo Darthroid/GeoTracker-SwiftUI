@@ -9,11 +9,26 @@ import XCTest
 
 class Tests_iOS: XCTestCase {
 	
-	private func app() -> XCUIApplication {
-		let app = XCUIApplication()
-		app.launch()
+	var app: XCUIApplication!
+	var uiInterruptionMonitor: NSObjectProtocol!
+	
+	let trackerName = "gpx_sample"
+	
+	override func setUp() {
+		super.setUp()
+		continueAfterFailure = false
 		
-		return app
+		// Works for some system dialogs, but not for all.
+		// So, it is better to avoid these dialogs at all, starting tests with the app already installed and all permissions already granted
+		self.uiInterruptionMonitor = addUIInterruptionMonitor(withDescription: "close alerts") { (alert) -> Bool in
+			if alert.buttons["Allow"].exists {
+				alert.buttons["Allow"].tap()
+			} else if alert.buttons["OK"].exists {
+				alert.buttons["OK"].tap()
+			}
+			
+			return true
+		}
 	}
 
     override func setUpWithError() throws {
@@ -24,13 +39,45 @@ class Tests_iOS: XCTestCase {
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
+	
+	override func tearDown() {
+		removeUIInterruptionMonitor(self.uiInterruptionMonitor)
+		super.tearDown()
+	}
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 	
-	func testSelectTracker() throws {
-		let app = self.app()
+	// MARK: - Helper methods
+	
+	func wait(forElement element: XCUIElement, timeout: TimeInterval, handler: XCWaitCompletionHandler?) {
+		let predicate = NSPredicate(format: "exists == 1")
+		expectation(for: predicate, evaluatedWith: element)
+		waitForExpectations(timeout: timeout, handler: handler)
+	}
+	
+	func startApp(with params: [String]?) -> XCUIApplication {
+		let application = XCUIApplication()
+		if let params = params {
+			application.launchArguments = params
+		}
+		application.launch()
+		return application
+	}
+	
+	func startApp() -> XCUIApplication  {
+		return self.startApp(with: ["--uitesting"])
+	}
+	
+	func startAppClean() -> XCUIApplication  {
+		return self.startApp(with: ["--uitesting", "--uitesting-clean"])
+	}
+	
+	// MARK: - Tests
+	
+	func test1_SelectTracker() throws {
+		let app = self.startApp()
 		let trackerlistTable = app.tables["TrackerList"]
 		
 		XCTAssertTrue(trackerlistTable.children(matching: .cell).count > 0)
@@ -44,10 +91,20 @@ class Tests_iOS: XCTestCase {
 		XCTAssertTrue(cellsCount > 0)
 	}
 	
-	func testDeleteTracker() throws {
-		let app = self.app()
+	func test2_ShareSheet() throws {
+		let app = self.startApp()
+		try? self.test1_SelectTracker()
+				
+		app.navigationBars[trackerName].buttons["ShareButton"].tap()
+		XCTAssertTrue(app.otherElements["ActivityListView"].waitForExistence(timeout: 5))
+	
+	}
+	
+	func test3_DeleteTracker() throws {
+		let app = self.startApp()
 		let trackerlistTable = app.tables["TrackerList"]
 		let cellsCountBefore = trackerlistTable.children(matching: .cell).count
+		XCTAssertTrue(cellsCountBefore > 0)
 		let cell = trackerlistTable.cells.element(boundBy: 0)
 		
 		cell.swipeLeft()

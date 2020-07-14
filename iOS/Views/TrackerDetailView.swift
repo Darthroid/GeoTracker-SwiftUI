@@ -22,15 +22,17 @@ struct TrackerDetailView: View {
 		}) {
 			Image(systemName: "square.and.arrow.up")
 				.resizable()
-		}.sheet(isPresented: $showShareSheet) {
+		}
+		.accessibility(identifier: "ShareButton")
+		.sheet(isPresented: $showShareSheet) {
 			ShareSheet(activityItems: [viewModel.fileUrl ?? viewModel.gpxString])
+//				.accessibility(identifier: "ShareSheet")
 		}
 	}
 	
     var body: some View {
 		VStack {
 			MapView(coordinates: viewModel.points.map { $0.toCLLocationCoordinate }, mode: .viewing)
-				.accessibility(identifier: "MapView")
 			List {
 				ForEach(viewModel.points, id: \.self) { point in
 					PointRow(viewModel: point)

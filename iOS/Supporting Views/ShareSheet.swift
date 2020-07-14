@@ -23,6 +23,7 @@ struct ShareSheet: UIViewControllerRepresentable {
 		controller.excludedActivityTypes = excludedActivityTypes
 		controller.completionWithItemsHandler = callback
 		controller.modalPresentationStyle = .pageSheet
+		controller.view.accessibilityIdentifier = "ShareSheet"
 		return controller
 	}
 	

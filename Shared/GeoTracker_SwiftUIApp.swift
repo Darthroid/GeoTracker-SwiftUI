@@ -15,6 +15,11 @@ struct GeoTracker_SwiftUIApp: App {
 			ContentView()
 				.onAppear {
 					CoreDataManager.shared.initalizeStack {}
+					if CommandLine.arguments.contains("--uitesting") {
+						// reset state (clear UserDefaults, etc)
+//						let defaultsName = Bundle.main.bundleIdentifier!
+//						UserDefaults.standard.removePersistentDomain(forName: defaultsName)
+					}
 				}
 		}
 	}
