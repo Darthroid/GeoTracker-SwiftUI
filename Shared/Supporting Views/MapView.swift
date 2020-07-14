@@ -13,9 +13,7 @@ struct MapView {
 	enum MapMode {
 		case viewing, recording
 	}
-	
-	/*@State*/ var polyline: MKPolyline?
-	
+		
 	@State var coordinates: [CLLocationCoordinate2D] = []
 	
 	var mode: MapMode
@@ -30,6 +28,24 @@ struct MapView {
 	
 	func updateMapView(_ view: MKMapView, context: Context) {
 		self.drawPolyline(view, with: self.coordinates)
+		switch self.mode {
+		case .viewing:
+			if let startCoordinate = self.coordinates.first, let finishCoordinate = self.coordinates.last {
+				self.addAnnotation(
+					view,
+					coordinate: startCoordinate,
+					title: "Start"
+				)
+				
+				self.addAnnotation(
+					view,
+					coordinate: finishCoordinate,
+					title: "Finish"
+				)
+			}
+		case .recording:
+			break
+		}
 	}
 	
 	/// Draws polyline on map from coordiantes.
@@ -80,6 +96,13 @@ struct MapView {
 		annoatation.subtitle = subtitle
 
 		view.addAnnotation(annoatation)
+	}
+	
+	func clearMap(_ view: MKMapView) {
+		let overlays = view.overlays
+		let allAnnotations = view.annotations
+		view.removeAnnotations(allAnnotations)
+		view.removeOverlays(overlays)
 	}
 }
 
