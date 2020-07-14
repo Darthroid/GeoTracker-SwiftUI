@@ -7,13 +7,32 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+#   build:
 
-    runs-on: macos-latest
+#     runs-on: macos-latest
 
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Build
+#       run: swift build -v
+#     - name: Run tests
+#       run: swift test -v
+
+  test:
+    name: Test
+    runs-on: macOS-latest
+    strategy:
+        matrix:
+          destination: ['platform=iOS Simulator,id=DEC5E859-67C9-4939-87A5-E749D824E541', 'platform=iOS Simulator,id=458AD46E-58ED-4016-875A-70965C6EC869']
     steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test -v
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and Test
+        run: |
+          ls -al
+          pod install --repo-update --clean-install
+          ls -al
+          echo "destination=${destination}"
+          xcodebuild clean test -workspace "GeoTracker-SwiftUI.xcworkspace -scheme "iOS" -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+        env:
+         destination: ${{ matrix.destination }}
