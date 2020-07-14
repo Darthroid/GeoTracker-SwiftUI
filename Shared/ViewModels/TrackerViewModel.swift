@@ -28,6 +28,9 @@ class TrackerViewModel: Identifiable {
 	public var id: String {
 		return tracker.id
 	}
+	
+	public var gpxString = ""
+	public var fileUrl: URL?
 
 	public init(from tracker: Tracker) {
 		self.tracker = tracker
@@ -35,7 +38,15 @@ class TrackerViewModel: Identifiable {
 }
 
 extension TrackerViewModel {
-	public func exportAsGPX(save: Bool = true, completionHandler: @escaping (String, URL?) -> Void) {
+	public func exportAsGPX(completion: @escaping (() -> Void)) {
+		self.exportAsGPX(completionHandler: { gpxString, fileUrl in
+			self.gpxString = gpxString
+			self.fileUrl = fileUrl
+			completion()
+		})
+	}
+	
+	private func exportAsGPX(save: Bool = true, completionHandler: @escaping (String, URL?) -> Void) {
 		GPXParseManager.createGPX(fromTracker: self.tracker, save: save, completionHandler: { gpxString, fileUrl in
 			DispatchQueue.main.async {
 				completionHandler(gpxString, fileUrl)

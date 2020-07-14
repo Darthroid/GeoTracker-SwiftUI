@@ -10,14 +10,20 @@ import SwiftUI
 import CoreLocation
 
 struct TrackerDetailView: View {
+	@State private var showShareSheet = false
+	
 	var viewModel: TrackerViewModel
 	
 	var shareButton: some View {
 		Button(action: {
-			
+			viewModel.exportAsGPX() {
+				showShareSheet.toggle()
+			}
 		}) {
 			Image(systemName: "square.and.arrow.up")
 				.resizable()
+		}.sheet(isPresented: $showShareSheet) {
+			ShareSheet(activityItems: [viewModel.fileUrl ?? viewModel.gpxString])
 		}
 	}
 	

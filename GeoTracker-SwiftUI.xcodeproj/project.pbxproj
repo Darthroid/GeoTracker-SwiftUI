@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		77B7A946C340A0A623D0A446 /* Pods_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F766023D2A20DB15421A4F3C /* Pods_macOS.framework */; };
 		CA983009FA33DAAA7C3D7E90 /* Pods_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DFB809F830341362E18988E /* Pods_iOS.framework */; };
+		D1157A4F24BE0E9E00C7AC8B /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1157A4E24BE0E9E00C7AC8B /* ShareSheet.swift */; };
 		D149A7AB24B9ADE50051F9D5 /* TrackerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149A7AA24B9ADE50051F9D5 /* TrackerDetailView.swift */; };
 		D1B45B1124B05B72004FA0D3 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B1024B05B72004FA0D3 /* Tests_iOS.swift */; };
 		D1B45B1C24B05B72004FA0D3 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B1B24B05B72004FA0D3 /* Tests_macOS.swift */; };
@@ -50,8 +51,6 @@
 		D1B45B7C24B05D92004FA0D3 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B7424B05D92004FA0D3 /* SettingsViewModel.swift */; };
 		D1B45B7D24B05D92004FA0D3 /* PointViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B7524B05D92004FA0D3 /* PointViewModel.swift */; };
 		D1B45B7E24B05D92004FA0D3 /* PointViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B7524B05D92004FA0D3 /* PointViewModel.swift */; };
-		D1B45B7F24B05D92004FA0D3 /* TrackerDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B7624B05D92004FA0D3 /* TrackerDetailViewModel.swift */; };
-		D1B45B8024B05D92004FA0D3 /* TrackerDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B7624B05D92004FA0D3 /* TrackerDetailViewModel.swift */; };
 		D1B45B8124B05D92004FA0D3 /* TrackerListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B7724B05D92004FA0D3 /* TrackerListViewModel.swift */; };
 		D1B45B8224B05D92004FA0D3 /* TrackerListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B7724B05D92004FA0D3 /* TrackerListViewModel.swift */; };
 		D1B45B8324B05D92004FA0D3 /* TrackerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B7824B05D92004FA0D3 /* TrackerViewModel.swift */; };
@@ -94,6 +93,7 @@
 		7DFB809F830341362E18988E /* Pods_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		80714D2A4DF1E5F29033E632 /* Pods-macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-macOS.release.xcconfig"; path = "Target Support Files/Pods-macOS/Pods-macOS.release.xcconfig"; sourceTree = "<group>"; };
 		B7841117850D36A4AE4294FE /* Pods-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS.debug.xcconfig"; path = "Target Support Files/Pods-iOS/Pods-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		D1157A4E24BE0E9E00C7AC8B /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		D149A7AA24B9ADE50051F9D5 /* TrackerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDetailView.swift; sourceTree = "<group>"; };
 		D1B45AF524B05B71004FA0D3 /* GeoTracker_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoTracker_SwiftUIApp.swift; sourceTree = "<group>"; };
 		D1B45AF624B05B71004FA0D3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -125,7 +125,6 @@
 		D1B45B7324B05D92004FA0D3 /* TrackerRecorderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerRecorderViewModel.swift; sourceTree = "<group>"; };
 		D1B45B7424B05D92004FA0D3 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		D1B45B7524B05D92004FA0D3 /* PointViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointViewModel.swift; sourceTree = "<group>"; };
-		D1B45B7624B05D92004FA0D3 /* TrackerDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerDetailViewModel.swift; sourceTree = "<group>"; };
 		D1B45B7724B05D92004FA0D3 /* TrackerListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerListViewModel.swift; sourceTree = "<group>"; };
 		D1B45B7824B05D92004FA0D3 /* TrackerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerViewModel.swift; sourceTree = "<group>"; };
 		D1B45B8624B05DCD004FA0D3 /* DocumentPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentPickerView.swift; sourceTree = "<group>"; };
@@ -314,7 +313,6 @@
 			children = (
 				D1B45B7524B05D92004FA0D3 /* PointViewModel.swift */,
 				D1B45B7424B05D92004FA0D3 /* SettingsViewModel.swift */,
-				D1B45B7624B05D92004FA0D3 /* TrackerDetailViewModel.swift */,
 				D1B45B7724B05D92004FA0D3 /* TrackerListViewModel.swift */,
 				D1B45B7324B05D92004FA0D3 /* TrackerRecorderViewModel.swift */,
 				D1B45B7824B05D92004FA0D3 /* TrackerViewModel.swift */,
@@ -326,6 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				D1B45B8624B05DCD004FA0D3 /* DocumentPickerView.swift */,
+				D1157A4E24BE0E9E00C7AC8B /* ShareSheet.swift */,
 			);
 			path = "Supporting Views";
 			sourceTree = "<group>";
@@ -594,6 +593,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1B45B4F24B05C0A004FA0D3 /* TrackerDataModel.xcdatamodeld in Sources */,
+				D1157A4F24BE0E9E00C7AC8B /* ShareSheet.swift in Sources */,
 				D1B45B8824B05DCD004FA0D3 /* DocumentPickerView.swift in Sources */,
 				D1B45B6B24B05C56004FA0D3 /* Bundle.swift in Sources */,
 				D1B45B9524B05DFA004FA0D3 /* TrackerDetailView.swift in Sources */,
@@ -602,7 +602,6 @@
 				D1B45B2024B05B72004FA0D3 /* ContentView.swift in Sources */,
 				D1B45B9B24B05DFA004FA0D3 /* PointRow.swift in Sources */,
 				D1B45B8124B05D92004FA0D3 /* TrackerListViewModel.swift in Sources */,
-				D1B45B7F24B05D92004FA0D3 /* TrackerDetailViewModel.swift in Sources */,
 				D1B45B5524B05C0A004FA0D3 /* DataModel.xcdatamodeld in Sources */,
 				D1B45B8A24B05DCD004FA0D3 /* MapView.swift in Sources */,
 				D1B45B8324B05D92004FA0D3 /* TrackerViewModel.swift in Sources */,
@@ -638,7 +637,6 @@
 				D1B45B2124B05B72004FA0D3 /* ContentView.swift in Sources */,
 				D1B45B9C24B05DFA004FA0D3 /* PointRow.swift in Sources */,
 				D1B45B8224B05D92004FA0D3 /* TrackerListViewModel.swift in Sources */,
-				D1B45B8024B05D92004FA0D3 /* TrackerDetailViewModel.swift in Sources */,
 				D1B45B5624B05C0A004FA0D3 /* DataModel.xcdatamodeld in Sources */,
 				D1B45B8B24B05DCD004FA0D3 /* MapView.swift in Sources */,
 				D1B45B8424B05D92004FA0D3 /* TrackerViewModel.swift in Sources */,
