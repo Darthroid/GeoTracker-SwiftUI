@@ -9,8 +9,13 @@
 import SwiftUI
 
 struct TrackerListView: View {
+	enum ActiveSheet {
+		case documentPicker, trackerCreator, none
+	}
+	
 	@State var showingActionSheet = false
 	@State var showingSheet = false
+	@State var activeSheet: ActiveSheet = .none
 	
 	@ObservedObject var viewModel = TrackerListViewModel()
 	
@@ -27,9 +32,11 @@ struct TrackerListView: View {
 				title: Text(""),
 				buttons: [
 					.default(Text("New tracker")) {
-						
+						activeSheet = .trackerCreator
+						showingSheet.toggle()
 					},
 					.default(Text("Import")) {
+						activeSheet = .documentPicker
 						showingSheet.toggle()
 					},
 					.cancel(Text("Cancel"))
@@ -72,7 +79,14 @@ struct TrackerListView: View {
 		.navigationBarTitle(Tab.trackerList.text)
 		.navigationBarItems(trailing: addButton)
 		.sheet(isPresented: $showingSheet) {
-			picker
+			switch self.activeSheet {
+			case .documentPicker:
+				picker
+			case .trackerCreator:
+				CreateTrackerView()
+			default:
+				fatalError("Incorrect active sheet")
+			}
 		}
 		.accessibility(identifier: "TrackerList")
     }

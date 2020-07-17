@@ -11,6 +11,7 @@
 		CA983009FA33DAAA7C3D7E90 /* Pods_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DFB809F830341362E18988E /* Pods_iOS.framework */; };
 		D1157A4F24BE0E9E00C7AC8B /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1157A4E24BE0E9E00C7AC8B /* ShareSheet.swift */; };
 		D149A7AB24B9ADE50051F9D5 /* TrackerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149A7AA24B9ADE50051F9D5 /* TrackerDetailView.swift */; };
+		D18D361B24BF6098009668DB /* CreateTrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18D361A24BF6098009668DB /* CreateTrackerView.swift */; };
 		D1B45B1124B05B72004FA0D3 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B1024B05B72004FA0D3 /* Tests_iOS.swift */; };
 		D1B45B1C24B05B72004FA0D3 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B1B24B05B72004FA0D3 /* Tests_macOS.swift */; };
 		D1B45B1E24B05B72004FA0D3 /* GeoTracker_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45AF524B05B71004FA0D3 /* GeoTracker_SwiftUIApp.swift */; };
@@ -95,6 +96,7 @@
 		B7841117850D36A4AE4294FE /* Pods-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS.debug.xcconfig"; path = "Target Support Files/Pods-iOS/Pods-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		D1157A4E24BE0E9E00C7AC8B /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		D149A7AA24B9ADE50051F9D5 /* TrackerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDetailView.swift; sourceTree = "<group>"; };
+		D18D361A24BF6098009668DB /* CreateTrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTrackerView.swift; sourceTree = "<group>"; };
 		D1B45AF524B05B71004FA0D3 /* GeoTracker_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoTracker_SwiftUIApp.swift; sourceTree = "<group>"; };
 		D1B45AF624B05B71004FA0D3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D1B45AF724B05B72004FA0D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				D1B45B9224B05DFA004FA0D3 /* TrackerListView.swift */,
 				D1B45B8D24B05DFA004FA0D3 /* TrackerRecorderView.swift */,
 				D1B45B8F24B05DFA004FA0D3 /* TrackerRow.swift */,
+				D18D361A24BF6098009668DB /* CreateTrackerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -608,6 +611,7 @@
 				D1B45B5124B05C0A004FA0D3 /* TrackerPoint+CoreDataClass.swift in Sources */,
 				D1B45B7924B05D92004FA0D3 /* TrackerRecorderViewModel.swift in Sources */,
 				D1B45B7B24B05D92004FA0D3 /* SettingsViewModel.swift in Sources */,
+				D18D361B24BF6098009668DB /* CreateTrackerView.swift in Sources */,
 				D1B45B6024B05C41004FA0D3 /* TrackerRecordManager.swift in Sources */,
 				D1B45BA124B06156004FA0D3 /* Constant.swift in Sources */,
 				D1B45B9D24B05DFA004FA0D3 /* TrackerListView.swift in Sources */,
