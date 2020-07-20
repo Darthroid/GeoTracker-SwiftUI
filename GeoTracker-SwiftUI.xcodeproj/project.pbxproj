@@ -26,8 +26,6 @@
 		D1B45B5224B05C0A004FA0D3 /* TrackerPoint+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B4924B05C09004FA0D3 /* TrackerPoint+CoreDataClass.swift */; };
 		D1B45B5324B05C0A004FA0D3 /* Tracker+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B4A24B05C09004FA0D3 /* Tracker+CoreDataProperties.swift */; };
 		D1B45B5424B05C0A004FA0D3 /* Tracker+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B4A24B05C09004FA0D3 /* Tracker+CoreDataProperties.swift */; };
-		D1B45B5524B05C0A004FA0D3 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B4B24B05C09004FA0D3 /* DataModel.xcdatamodeld */; };
-		D1B45B5624B05C0A004FA0D3 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B4B24B05C09004FA0D3 /* DataModel.xcdatamodeld */; };
 		D1B45B5724B05C0A004FA0D3 /* Tracker+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B4D24B05C09004FA0D3 /* Tracker+CoreDataClass.swift */; };
 		D1B45B5824B05C0A004FA0D3 /* Tracker+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B4D24B05C09004FA0D3 /* Tracker+CoreDataClass.swift */; };
 		D1B45B5924B05C0A004FA0D3 /* TrackerPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B4E24B05C0A004FA0D3 /* TrackerPoint+CoreDataProperties.swift */; };
@@ -69,6 +67,26 @@
 		D1B45BA124B06156004FA0D3 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45BA024B06156004FA0D3 /* Constant.swift */; };
 		D1B45BA224B06156004FA0D3 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45BA024B06156004FA0D3 /* Constant.swift */; };
 		D1B45BA924B06DEA004FA0D3 /* TrackerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45BA724B06DEA004FA0D3 /* TrackerListView.swift */; };
+		D1CC497B24C23F0000006E07 /* GPXEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497124C23EFF00006E07 /* GPXEntity+CoreDataClass.swift */; };
+		D1CC497C24C23F0000006E07 /* GPXEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497124C23EFF00006E07 /* GPXEntity+CoreDataClass.swift */; };
+		D1CC497D24C23F0000006E07 /* Track+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497224C23EFF00006E07 /* Track+CoreDataProperties.swift */; };
+		D1CC497E24C23F0000006E07 /* Track+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497224C23EFF00006E07 /* Track+CoreDataProperties.swift */; };
+		D1CC497F24C23F0000006E07 /* TrackPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497324C23EFF00006E07 /* TrackPoint+CoreDataProperties.swift */; };
+		D1CC498024C23F0000006E07 /* TrackPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497324C23EFF00006E07 /* TrackPoint+CoreDataProperties.swift */; };
+		D1CC498124C23F0000006E07 /* Track+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497424C23EFF00006E07 /* Track+CoreDataClass.swift */; };
+		D1CC498224C23F0000006E07 /* Track+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497424C23EFF00006E07 /* Track+CoreDataClass.swift */; };
+		D1CC498324C23F0000006E07 /* Waypoint+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497524C23EFF00006E07 /* Waypoint+CoreDataClass.swift */; };
+		D1CC498424C23F0000006E07 /* Waypoint+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497524C23EFF00006E07 /* Waypoint+CoreDataClass.swift */; };
+		D1CC498524C23F0000006E07 /* TrackSegment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497624C23F0000006E07 /* TrackSegment+CoreDataProperties.swift */; };
+		D1CC498624C23F0000006E07 /* TrackSegment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497624C23F0000006E07 /* TrackSegment+CoreDataProperties.swift */; };
+		D1CC498724C23F0000006E07 /* Waypoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497724C23F0000006E07 /* Waypoint+CoreDataProperties.swift */; };
+		D1CC498824C23F0000006E07 /* Waypoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497724C23F0000006E07 /* Waypoint+CoreDataProperties.swift */; };
+		D1CC498B24C23F0000006E07 /* TrackSegment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497924C23F0000006E07 /* TrackSegment+CoreDataClass.swift */; };
+		D1CC498C24C23F0000006E07 /* TrackSegment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497924C23F0000006E07 /* TrackSegment+CoreDataClass.swift */; };
+		D1CC498D24C23F0000006E07 /* TrackPoint+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497A24C23F0000006E07 /* TrackPoint+CoreDataClass.swift */; };
+		D1CC498E24C23F0000006E07 /* TrackPoint+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC497A24C23F0000006E07 /* TrackPoint+CoreDataClass.swift */; };
+		D1EE44B524C58C8200DED51E /* GPXEntity+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE44B424C58C8200DED51E /* GPXEntity+CoreDataProperties copy.swift */; };
+		D1EE44B624C58C8200DED51E /* GPXEntity+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE44B424C58C8200DED51E /* GPXEntity+CoreDataProperties copy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,7 +132,6 @@
 		D1B45B4824B05C09004FA0D3 /* getlocation.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = getlocation.xcdatamodel; sourceTree = "<group>"; };
 		D1B45B4924B05C09004FA0D3 /* TrackerPoint+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrackerPoint+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D1B45B4A24B05C09004FA0D3 /* Tracker+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tracker+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		D1B45B4C24B05C09004FA0D3 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		D1B45B4D24B05C09004FA0D3 /* Tracker+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tracker+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D1B45B4E24B05C0A004FA0D3 /* TrackerPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrackerPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D1B45B5C24B05C41004FA0D3 /* TrackerRecordManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerRecordManager.swift; sourceTree = "<group>"; };
@@ -139,6 +156,16 @@
 		D1B45B9224B05DFA004FA0D3 /* TrackerListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerListView.swift; sourceTree = "<group>"; };
 		D1B45BA024B06156004FA0D3 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		D1B45BA724B06DEA004FA0D3 /* TrackerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerListView.swift; sourceTree = "<group>"; };
+		D1CC497124C23EFF00006E07 /* GPXEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GPXEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D1CC497224C23EFF00006E07 /* Track+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Track+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D1CC497324C23EFF00006E07 /* TrackPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrackPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D1CC497424C23EFF00006E07 /* Track+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Track+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D1CC497524C23EFF00006E07 /* Waypoint+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Waypoint+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D1CC497624C23F0000006E07 /* TrackSegment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrackSegment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D1CC497724C23F0000006E07 /* Waypoint+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Waypoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D1CC497924C23F0000006E07 /* TrackSegment+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrackSegment+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D1CC497A24C23F0000006E07 /* TrackPoint+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrackPoint+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D1EE44B424C58C8200DED51E /* GPXEntity+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GPXEntity+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
 		F766023D2A20DB15421A4F3C /* Pods_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -280,7 +307,7 @@
 		D1B45B5B24B05C19004FA0D3 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				D1B45B4B24B05C09004FA0D3 /* DataModel.xcdatamodeld */,
+				D1CC498F24C23F3B00006E07 /* new */,
 				D1B45B4D24B05C09004FA0D3 /* Tracker+CoreDataClass.swift */,
 				D1B45B4A24B05C09004FA0D3 /* Tracker+CoreDataProperties.swift */,
 				D1B45B4724B05C09004FA0D3 /* TrackerDataModel.xcdatamodeld */,
@@ -351,6 +378,23 @@
 				D1B45B8724B05DCD004FA0D3 /* MapView.swift */,
 			);
 			path = "Supporting Views";
+			sourceTree = "<group>";
+		};
+		D1CC498F24C23F3B00006E07 /* new */ = {
+			isa = PBXGroup;
+			children = (
+				D1CC497124C23EFF00006E07 /* GPXEntity+CoreDataClass.swift */,
+				D1EE44B424C58C8200DED51E /* GPXEntity+CoreDataProperties copy.swift */,
+				D1CC497424C23EFF00006E07 /* Track+CoreDataClass.swift */,
+				D1CC497224C23EFF00006E07 /* Track+CoreDataProperties.swift */,
+				D1CC497A24C23F0000006E07 /* TrackPoint+CoreDataClass.swift */,
+				D1CC497324C23EFF00006E07 /* TrackPoint+CoreDataProperties.swift */,
+				D1CC497924C23F0000006E07 /* TrackSegment+CoreDataClass.swift */,
+				D1CC497624C23F0000006E07 /* TrackSegment+CoreDataProperties.swift */,
+				D1CC497524C23EFF00006E07 /* Waypoint+CoreDataClass.swift */,
+				D1CC497724C23F0000006E07 /* Waypoint+CoreDataProperties.swift */,
+			);
+			path = new;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -601,11 +645,12 @@
 				D1B45B6B24B05C56004FA0D3 /* Bundle.swift in Sources */,
 				D1B45B9524B05DFA004FA0D3 /* TrackerDetailView.swift in Sources */,
 				D1B45B5924B05C0A004FA0D3 /* TrackerPoint+CoreDataProperties.swift in Sources */,
+				D1CC498D24C23F0000006E07 /* TrackPoint+CoreDataClass.swift in Sources */,
 				D1B45B5324B05C0A004FA0D3 /* Tracker+CoreDataProperties.swift in Sources */,
 				D1B45B2024B05B72004FA0D3 /* ContentView.swift in Sources */,
+				D1CC497B24C23F0000006E07 /* GPXEntity+CoreDataClass.swift in Sources */,
 				D1B45B9B24B05DFA004FA0D3 /* PointRow.swift in Sources */,
 				D1B45B8124B05D92004FA0D3 /* TrackerListViewModel.swift in Sources */,
-				D1B45B5524B05C0A004FA0D3 /* DataModel.xcdatamodeld in Sources */,
 				D1B45B8A24B05DCD004FA0D3 /* MapView.swift in Sources */,
 				D1B45B8324B05D92004FA0D3 /* TrackerViewModel.swift in Sources */,
 				D1B45B5124B05C0A004FA0D3 /* TrackerPoint+CoreDataClass.swift in Sources */,
@@ -614,17 +659,25 @@
 				D18D361B24BF6098009668DB /* CreateTrackerView.swift in Sources */,
 				D1B45B6024B05C41004FA0D3 /* TrackerRecordManager.swift in Sources */,
 				D1B45BA124B06156004FA0D3 /* Constant.swift in Sources */,
+				D1CC498124C23F0000006E07 /* Track+CoreDataClass.swift in Sources */,
+				D1CC497D24C23F0000006E07 /* Track+CoreDataProperties.swift in Sources */,
 				D1B45B9D24B05DFA004FA0D3 /* TrackerListView.swift in Sources */,
 				D1B45B6224B05C41004FA0D3 /* GPXParseManager.swift in Sources */,
 				D1B45B6D24B05C56004FA0D3 /* Date.swift in Sources */,
+				D1CC497F24C23F0000006E07 /* TrackPoint+CoreDataProperties.swift in Sources */,
+				D1CC498524C23F0000006E07 /* TrackSegment+CoreDataProperties.swift in Sources */,
+				D1CC498324C23F0000006E07 /* Waypoint+CoreDataClass.swift in Sources */,
+				D1EE44B524C58C8200DED51E /* GPXEntity+CoreDataProperties copy.swift in Sources */,
 				D1B45B9324B05DFA004FA0D3 /* TrackerRecorderView.swift in Sources */,
 				D1B45B9724B05DFA004FA0D3 /* TrackerRow.swift in Sources */,
+				D1CC498724C23F0000006E07 /* Waypoint+CoreDataProperties.swift in Sources */,
 				D1B45B6624B05C41004FA0D3 /* LocationManager.swift in Sources */,
 				D1B45B9924B05DFA004FA0D3 /* SettingsView.swift in Sources */,
 				D1B45B5724B05C0A004FA0D3 /* Tracker+CoreDataClass.swift in Sources */,
 				D1B45B7124B05D40004FA0D3 /* PreviewGenerator.swift in Sources */,
 				D1B45B7D24B05D92004FA0D3 /* PointViewModel.swift in Sources */,
 				D1B45B1E24B05B72004FA0D3 /* GeoTracker_SwiftUIApp.swift in Sources */,
+				D1CC498B24C23F0000006E07 /* TrackSegment+CoreDataClass.swift in Sources */,
 				D1B45B6424B05C41004FA0D3 /* CoreDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -633,30 +686,39 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1CC498024C23F0000006E07 /* TrackPoint+CoreDataProperties.swift in Sources */,
 				D1B45B5024B05C0A004FA0D3 /* TrackerDataModel.xcdatamodeld in Sources */,
 				D1B45B6C24B05C56004FA0D3 /* Bundle.swift in Sources */,
+				D1CC497E24C23F0000006E07 /* Track+CoreDataProperties.swift in Sources */,
 				D149A7AB24B9ADE50051F9D5 /* TrackerDetailView.swift in Sources */,
 				D1B45B5A24B05C0A004FA0D3 /* TrackerPoint+CoreDataProperties.swift in Sources */,
 				D1B45B5424B05C0A004FA0D3 /* Tracker+CoreDataProperties.swift in Sources */,
 				D1B45B2124B05B72004FA0D3 /* ContentView.swift in Sources */,
 				D1B45B9C24B05DFA004FA0D3 /* PointRow.swift in Sources */,
 				D1B45B8224B05D92004FA0D3 /* TrackerListViewModel.swift in Sources */,
-				D1B45B5624B05C0A004FA0D3 /* DataModel.xcdatamodeld in Sources */,
+				D1CC498C24C23F0000006E07 /* TrackSegment+CoreDataClass.swift in Sources */,
 				D1B45B8B24B05DCD004FA0D3 /* MapView.swift in Sources */,
 				D1B45B8424B05D92004FA0D3 /* TrackerViewModel.swift in Sources */,
+				D1CC498224C23F0000006E07 /* Track+CoreDataClass.swift in Sources */,
+				D1CC498424C23F0000006E07 /* Waypoint+CoreDataClass.swift in Sources */,
 				D1B45B5224B05C0A004FA0D3 /* TrackerPoint+CoreDataClass.swift in Sources */,
 				D1B45B7A24B05D92004FA0D3 /* TrackerRecorderViewModel.swift in Sources */,
+				D1CC498624C23F0000006E07 /* TrackSegment+CoreDataProperties.swift in Sources */,
 				D1B45B7C24B05D92004FA0D3 /* SettingsViewModel.swift in Sources */,
+				D1CC497C24C23F0000006E07 /* GPXEntity+CoreDataClass.swift in Sources */,
 				D1B45B6124B05C41004FA0D3 /* TrackerRecordManager.swift in Sources */,
 				D1B45BA224B06156004FA0D3 /* Constant.swift in Sources */,
+				D1CC498824C23F0000006E07 /* Waypoint+CoreDataProperties.swift in Sources */,
 				D1B45B6324B05C41004FA0D3 /* GPXParseManager.swift in Sources */,
 				D1B45B6E24B05C56004FA0D3 /* Date.swift in Sources */,
 				D1B45B6724B05C41004FA0D3 /* LocationManager.swift in Sources */,
 				D1B45BA924B06DEA004FA0D3 /* TrackerListView.swift in Sources */,
 				D1B45B5824B05C0A004FA0D3 /* Tracker+CoreDataClass.swift in Sources */,
 				D1B45B7224B05D40004FA0D3 /* PreviewGenerator.swift in Sources */,
+				D1CC498E24C23F0000006E07 /* TrackPoint+CoreDataClass.swift in Sources */,
 				D1B45B7E24B05D92004FA0D3 /* PointViewModel.swift in Sources */,
 				D1B45B1F24B05B72004FA0D3 /* GeoTracker_SwiftUIApp.swift in Sources */,
+				D1EE44B624C58C8200DED51E /* GPXEntity+CoreDataProperties copy.swift in Sources */,
 				D1B45B6524B05C41004FA0D3 /* CoreDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1048,16 +1110,6 @@
 			);
 			currentVersion = D1B45B4824B05C09004FA0D3 /* getlocation.xcdatamodel */;
 			path = TrackerDataModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		D1B45B4B24B05C09004FA0D3 /* DataModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				D1B45B4C24B05C09004FA0D3 /* DataModel.xcdatamodel */,
-			);
-			currentVersion = D1B45B4C24B05C09004FA0D3 /* DataModel.xcdatamodel */;
-			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

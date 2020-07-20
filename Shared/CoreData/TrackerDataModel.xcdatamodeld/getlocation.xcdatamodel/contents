@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17162" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="GPXEntity" representedClassName="GPXEntity" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <relationship name="tracks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Track" inverseName="gpxEntity" inverseEntity="Track"/>
+        <relationship name="waypoints" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Waypoint" inverseName="gpxEntity" inverseEntity="Waypoint"/>
+    </entity>
+    <entity name="Track" representedClassName="Track" syncable="YES">
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <relationship name="gpxEntity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GPXEntity" inverseName="tracks" inverseEntity="GPXEntity"/>
+        <relationship name="segments" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="TrackSegment" inverseName="track" inverseEntity="TrackSegment"/>
+    </entity>
     <entity name="Tracker" representedClassName=".Tracker" syncable="YES">
         <attribute name="id" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -12,8 +31,32 @@
         <attribute name="timestamp" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="tracker" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tracker" inverseName="points" inverseEntity="Tracker"/>
     </entity>
+    <entity name="TrackPoint" representedClassName="TrackPoint" syncable="YES">
+        <attribute name="elevation" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="speed" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="trackSegment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrackSegment" inverseName="trackpoints" inverseEntity="TrackSegment"/>
+    </entity>
+    <entity name="TrackSegment" representedClassName="TrackSegment" syncable="YES">
+        <relationship name="track" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Track" inverseName="segments" inverseEntity="Track"/>
+        <relationship name="trackpoints" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="TrackPoint" inverseName="trackSegment" inverseEntity="TrackPoint"/>
+    </entity>
+    <entity name="Waypoint" representedClassName="Waypoint" syncable="YES">
+        <attribute name="comment" optional="YES" attributeType="String"/>
+        <attribute name="elevation" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="speed" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="time" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="gpxEntity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GPXEntity" inverseName="waypoints" inverseEntity="GPXEntity"/>
+    </entity>
     <elements>
+        <element name="GPXEntity" positionX="42.38671875" positionY="224.35546875" width="128" height="178"/>
+        <element name="Track" positionX="213.9140625" positionY="411.87109375" width="128" height="133"/>
         <element name="Tracker" positionX="168.0390625" positionY="-81.41015625" width="128" height="88"/>
-        <element name="TrackerPoint" positionX="-124.87109375" positionY="30.44140625" width="128" height="118"/>
+        <element name="TrackerPoint" positionX="-10.16796875" positionY="-10.3828125" width="128" height="118"/>
+        <element name="TrackPoint" positionX="211.19140625" positionY="749.3125" width="128" height="88"/>
+        <element name="TrackSegment" positionX="140.8828125" positionY="635.0859375" width="128" height="73"/>
+        <element name="Waypoint" positionX="-141.7734375" positionY="402.07421875" width="128" height="163"/>
     </elements>
 </model>

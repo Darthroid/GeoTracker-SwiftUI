@@ -59,8 +59,57 @@ public class CoreDataManager {
 
         self.persistentContainer.persistentStoreDescriptions = [description]
     }
+	
+	private func saveContext() throws {
+		if self.context.hasChanges {
+			try self.context.save()
+		}
+	}
 
     // MARK: - Create (Insert)
+	
+	public func insertGpxEntity(with id: String, author: String? = nil, description: String? = nil, email: String? = nil, name: String? = nil, time: Int64? = nil, url: String? = nil, waypoints: [Waypoint] = [], tracks: [Track] = []) throws {
+		let entity = GPXEntity(context: self.context)
+		
+		entity.id = id
+		entity.author = author
+		entity.desc = description
+		entity.email = email
+		entity.name = name
+		entity.time = time ?? Int64(Date().timeIntervalSince1970)
+		entity.url = url
+		
+		waypoints.forEach { entity.addToWaypoints($0) }
+		tracks.forEach { entity.addToTracks($0) }
+		
+		self.context.insert(entity)
+//		self.event(.insert, ids: [tracker.id], trackers: [tracker])
+		try self.saveContext()
+	}
+	
+	public func insertWayPoints(entityId: String, waypoints: [Waypoint]) throws {
+		guard let entity = try self.fetchGPXEntites(with: entityId).first else { return }
+		
+		waypoints.forEach {
+			entity.addToWaypoints($0)
+		}
+		
+		self.context.refresh(entity, mergeChanges: true)
+//		self.event(.insert, ids: [tracker.id], trackers: [tracker])
+		try self.saveContext()
+	}
+	
+	public func insertTracks(entityId: String, tracks: [Track]) throws {
+		guard let entity = try self.fetchGPXEntites(with: entityId).first else { return }
+		
+		tracks.forEach {
+			entity.addToTracks($0)
+		}
+		
+		self.context.refresh(entity, mergeChanges: true)
+//		self.event(.insert, ids: [tracker.id], trackers: [tracker])
+		try self.saveContext()
+	}
 
     public func insertTracker(withId id: String, name: String, points: [TrackerPoint] = []) throws {
         let tracker = Tracker(context: self.context)
@@ -71,12 +120,32 @@ public class CoreDataManager {
 
         self.context.insert(tracker)
 		self.event(.insert, ids: [tracker.id], trackers: [tracker])
-        if self.context.hasChanges {
-            try self.context.save()
-        }
+		try self.saveContext()
     }
 
     // MARK: - Read (Fetch)
+	
+	public func fetchGPXEntities() throws -> [GPXEntity] {
+		let request = GPXEntity.fetchRequest() as NSFetchRequest<GPXEntity>
+		let entities = try self.context.fetch(request)
+		return entities
+	}
+	
+	public func fetchGPXEntites(with id: String) throws -> [GPXEntity] {
+		let request = NSFetchRequest<GPXEntity>(entityName: "GPXEntity")
+		request.predicate = NSPredicate(format: "id == %@", id)
+		
+		let entities = try self.context.fetch(request)
+		return entities
+	}
+	
+	public func fetchGPXEntities(with name: String) throws -> [GPXEntity] {
+		let request = NSFetchRequest<GPXEntity>(entityName: "GPXEntity")
+		request.predicate = NSPredicate(format: "name == %@", name)
+		
+		let entities = try self.context.fetch(request)
+		return entities
+	}
 
    public func fetchTrackers() throws -> [Tracker] {
         let request = Tracker.fetchRequest() as NSFetchRequest<Tracker>
@@ -101,6 +170,7 @@ public class CoreDataManager {
     }
 
     // MARK: - Update
+	
     public func update(tracker: Tracker, points: [TrackerPoint]) throws {
         points.forEach({ tracker.addToPoints($0) })
 		self.event(.update, ids: [tracker.id], trackers: [tracker])
@@ -110,6 +180,23 @@ public class CoreDataManager {
     }
 
     // MARK: - Delete
+	
+	public func deleteGPXEntity(entity: GPXEntity) throws {
+		self.context.delete(entity)
+//		self.event(.delete, ids: [tracker.id], trackers: [tracker])
+		try self.saveContext()
+	}
+	
+	public func deleteGPXEntity(withId id: String) throws {
+		let fetchRequest = GPXEntity.fetchRequest() as NSFetchRequest<NSFetchRequestResult>
+		fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+
+		let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+		
+		try self.context.execute(deleteRequest)
+//		self.event(.delete, ids: [id], trackers: nil)
+		try self.saveContext()
+	}
 
     public func delete(tracker: Tracker) throws {
         self.context.delete(tracker)
