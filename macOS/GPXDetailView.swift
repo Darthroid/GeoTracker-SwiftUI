@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TrackerDetailView: View {
+struct GPXDetailView: View {
     var body: some View {
         Text("Tracker detail")
     }
@@ -15,6 +15,6 @@ struct TrackerDetailView: View {
 
 struct TrackerDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TrackerDetailView()
+        GPXDetailView()
     }
 }

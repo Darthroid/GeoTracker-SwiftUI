@@ -7,7 +7,7 @@
 
 import Foundation
 import MapKit
-#if os(iOS)
+//#if os(iOS)
 import UIKit
 
 extension MKMapSnapshotter.Snapshot {
@@ -55,18 +55,16 @@ final class PreviewGenerator {
 	public static let shared = PreviewGenerator()
 	private let imageCache = NSCache<NSString, UIImage>()
 	
-	func generate(points: [PointViewModel], trackerId: String, size: CGSize, completion: @escaping ((UIImage) -> Void)) {
-		if let cachedImage = self.imageCache.object(forKey: trackerId as NSString) {
+	func generate(coordinates: [CLLocationCoordinate2D], id: String, size: CGSize, completion: @escaping ((UIImage) -> Void)) {
+		if let cachedImage = self.imageCache.object(forKey: id as NSString) {
 			completion(cachedImage)
 		} else {
-			self.generateSnapShot(points: points, id: trackerId, size: size, completion: completion)
+			self.generateSnapShot(coordinates: coordinates, id: id, size: size, completion: completion)
 		}
 	}
 	
-	private func generateSnapShot(points: [PointViewModel], id: String, size: CGSize, completion: @escaping ((UIImage) -> Void)) {
+	private func generateSnapShot(coordinates: [CLLocationCoordinate2D], id: String, size: CGSize, completion: @escaping ((UIImage) -> Void)) {
 		let mapSnapshotOptions = MKMapSnapshotter.Options()
-
-		let coordinates = points.map({ $0.toCLLocationCoordinate })
 
 		let polyLine = MKPolyline(coordinates: coordinates, count: coordinates.count)
 		let region = MKCoordinateRegion(polyLine.boundingMapRect)
@@ -96,4 +94,4 @@ final class PreviewGenerator {
 		}
 	}
 }
-#endif
+//#endif

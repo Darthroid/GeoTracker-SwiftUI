@@ -26,3 +26,10 @@ extension Waypoint {
     @NSManaged public var gpxEntity: GPXEntity?
 
 }
+
+extension Waypoint: PointProtocol {
+	var coordinate: CLLocationCoordinate2D {
+		get { return CLLocationCoordinate2D(latitude: latitude, longitude: longitude) }
+		set {  }
+	}
+}

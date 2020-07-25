@@ -10,9 +10,10 @@ import Foundation
 import CoreData
 
 public protocol CoreDataObserver: class {
-	func didInsert(ids: [String], trackers: [Tracker])
-	func didUpdate(ids: [String], trackers: [Tracker]?)
-	func didDelete(ids: [String], trackers: [Tracker]?)
+	func didInsert(ids: [String], gpxEntities: [GPXEntity])
+	func didUpdate(ids: [String], gpxEntities: [GPXEntity])
+	func didDelete(ids: [String], gpxEntities: [GPXEntity])
+	
 }
 
 public class CoreDataManager {
@@ -68,6 +69,12 @@ public class CoreDataManager {
 
     // MARK: - Create (Insert)
 	
+	public func insertGpxEntity(_ entity: GPXEntity) throws {
+		self.context.insert(entity)
+		self.event(.insert, ids: [entity.id ?? ""], gpxEntities: [entity])
+		try self.saveContext()
+	}
+	
 	public func insertGpxEntity(with id: String, author: String? = nil, description: String? = nil, email: String? = nil, name: String? = nil, time: Int64? = nil, url: String? = nil, waypoints: [Waypoint] = [], tracks: [Track] = []) throws {
 		let entity = GPXEntity(context: self.context)
 		
@@ -82,9 +89,7 @@ public class CoreDataManager {
 		waypoints.forEach { entity.addToWaypoints($0) }
 		tracks.forEach { entity.addToTracks($0) }
 		
-		self.context.insert(entity)
-//		self.event(.insert, ids: [tracker.id], trackers: [tracker])
-		try self.saveContext()
+		try self.insertGpxEntity(entity)
 	}
 	
 	public func insertWayPoints(entityId: String, waypoints: [Waypoint]) throws {
@@ -110,23 +115,11 @@ public class CoreDataManager {
 //		self.event(.insert, ids: [tracker.id], trackers: [tracker])
 		try self.saveContext()
 	}
-
-    public func insertTracker(withId id: String, name: String, points: [TrackerPoint] = []) throws {
-        let tracker = Tracker(context: self.context)
-        tracker.id = id
-        tracker.name = name
-
-        points.forEach({ tracker.addToPoints($0)})
-
-        self.context.insert(tracker)
-		self.event(.insert, ids: [tracker.id], trackers: [tracker])
-		try self.saveContext()
-    }
-
     // MARK: - Read (Fetch)
 	
 	public func fetchGPXEntities() throws -> [GPXEntity] {
 		let request = GPXEntity.fetchRequest() as NSFetchRequest<GPXEntity>
+//		request.returnsObjectsAsFaults = false
 		let entities = try self.context.fetch(request)
 		return entities
 	}
@@ -134,7 +127,7 @@ public class CoreDataManager {
 	public func fetchGPXEntites(with id: String) throws -> [GPXEntity] {
 		let request = NSFetchRequest<GPXEntity>(entityName: "GPXEntity")
 		request.predicate = NSPredicate(format: "id == %@", id)
-		
+//		request.returnsObjectsAsFaults = false
 		let entities = try self.context.fetch(request)
 		return entities
 	}
@@ -142,48 +135,16 @@ public class CoreDataManager {
 	public func fetchGPXEntities(with name: String) throws -> [GPXEntity] {
 		let request = NSFetchRequest<GPXEntity>(entityName: "GPXEntity")
 		request.predicate = NSPredicate(format: "name == %@", name)
-		
+//		request.returnsObjectsAsFaults = false
 		let entities = try self.context.fetch(request)
 		return entities
 	}
-
-   public func fetchTrackers() throws -> [Tracker] {
-        let request = Tracker.fetchRequest() as NSFetchRequest<Tracker>
-        let trackers = try self.context.fetch(request)
-        return trackers
-    }
-
-    public func fetchTrackers(withId id: String) throws -> [Tracker] {
-        let request = NSFetchRequest<Tracker>(entityName: "Tracker")
-        request.predicate = NSPredicate(format: "id == %@", id)
-
-        let trackers = try self.context.fetch(request)
-        return trackers
-    }
-
-    public func fetchTrackers(withName name: String) throws -> [Tracker] {
-        let request = NSFetchRequest<Tracker>(entityName: "Tracker")
-        request.predicate = NSPredicate(format: "name == %@", name)
-
-        let trackers = try self.context.fetch(request)
-        return trackers
-    }
-
-    // MARK: - Update
-	
-    public func update(tracker: Tracker, points: [TrackerPoint]) throws {
-        points.forEach({ tracker.addToPoints($0) })
-		self.event(.update, ids: [tracker.id], trackers: [tracker])
-        if self.context.hasChanges {
-            try self.context.save()
-        }
-    }
 
     // MARK: - Delete
 	
 	public func deleteGPXEntity(entity: GPXEntity) throws {
 		self.context.delete(entity)
-//		self.event(.delete, ids: [tracker.id], trackers: [tracker])
+		self.event(.delete, ids: [entity.id], gpxEntities: [entity])
 		try self.saveContext()
 	}
 	
@@ -194,29 +155,9 @@ public class CoreDataManager {
 		let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
 		
 		try self.context.execute(deleteRequest)
-//		self.event(.delete, ids: [id], trackers: nil)
+		self.event(.delete, ids: [id], gpxEntities: [])
 		try self.saveContext()
 	}
-
-    public func delete(tracker: Tracker) throws {
-        self.context.delete(tracker)
-		self.event(.delete, ids: [tracker.id], trackers: [tracker])
-        if self.context.hasChanges {
-            try self.context.save()
-        }
-    }
-
-    public func deleteTrackers(withId id: String) throws {
-        let fetchRequest = Tracker.fetchRequest() as NSFetchRequest<NSFetchRequestResult>
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        try self.context.execute(deleteRequest)
-		self.event(.delete, ids: [id], trackers: nil)
-        if self.context.hasChanges {
-            try self.context.save()
-        }
-    }
 }
 
 // TODO: - replace observation method with CoreData default tools
@@ -231,7 +172,7 @@ private extension CoreDataManager {
 		case update
 	}
 
-	func event(_ event: Event, ids: [String], trackers: [Tracker]?) {
+	func event(_ event: Event, ids: [String], gpxEntities: [GPXEntity]) {
 		for (id, observation) in observations {
 			// If the observer is no longer in memory, we
 			// can clean up the observation for its ID
@@ -242,11 +183,11 @@ private extension CoreDataManager {
 
 			switch event {
 			case .insert:
-				observer.didInsert(ids: ids, trackers: trackers ?? [])
+				observer.didInsert(ids: ids, gpxEntities: gpxEntities)
 			case .update:
-				observer.didUpdate(ids: ids, trackers: trackers)
+				observer.didUpdate(ids: ids, gpxEntities: gpxEntities)
 			case .delete:
-				observer.didDelete(ids: ids, trackers: trackers)
+				observer.didDelete(ids: ids, gpxEntities: gpxEntities)
 			}
 		}
 	}

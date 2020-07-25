@@ -2,7 +2,7 @@
 //  GPXEntity+CoreDataProperties.swift
 //  
 //
-//  Created by Oleg Komaristy on 20.07.2020.
+//  Created by Oleg Komaristy on 21.07.2020.
 //
 //
 
@@ -19,10 +19,10 @@ extension GPXEntity {
     @NSManaged public var author: String?
     @NSManaged public var desc: String?
     @NSManaged public var email: String?
+    @NSManaged public var id: String
     @NSManaged public var name: String?
     @NSManaged public var time: Int64
     @NSManaged public var url: String?
-    @NSManaged public var id: String?
     @NSManaged public var tracks: NSSet?
     @NSManaged public var waypoints: NSOrderedSet?
 

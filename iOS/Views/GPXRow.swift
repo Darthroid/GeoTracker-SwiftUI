@@ -7,9 +7,9 @@
 //
 
 import SwiftUI
-//import GeoTrackerCore
+import CoreLocation
 //#if os(iOS)
-struct TrackerRow: View {
+struct GPXRow: View {
 	@State var isGenerating: Bool = false
 	
 	#if os(macOS)
@@ -18,7 +18,7 @@ struct TrackerRow: View {
 	@State var image = UIImage()
 	#endif
 	
-	var viewModel: TrackerViewModel
+	var viewModel: GPXViewModel
 	
 	#if os(macOS)
 	var imageView: some View {
@@ -65,21 +65,26 @@ struct TrackerRow: View {
 	func generatePreview() {
 		let size = CGSize(width: 50, height: 50)
 		isGenerating = true
-		PreviewGenerator.shared.generate(points: viewModel.points, trackerId: viewModel.id, size: size, completion: { preview in
-//			DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
-				isGenerating = false
+		var coordinates = [CLLocationCoordinate2D]()
+		
+		if !viewModel.allTrackPoints.isEmpty {
+			coordinates = viewModel.allTrackPoints.map({ $0.coordinate })
+		} else if !viewModel.waypoints.isEmpty {
+			coordinates = viewModel.waypoints.map({ $0.coordinate })
+		}
 
-				image = preview
-//			})
+		PreviewGenerator.shared.generate(coordinates: coordinates, id: viewModel.id, size: size, completion: { preview in
+			isGenerating = false
 			
+			image = preview
 		})
 	}
 }
 
-struct TrackerRow_Previews: PreviewProvider {
+struct GPXRow_Previews: PreviewProvider {
     static var previews: some View {
-		TrackerRow(
-			viewModel: TrackerViewModel(from: Tracker())
+		GPXRow(
+			viewModel: GPXViewModel(from: GPXEntity())
 		)
 		.previewLayout(.fixed(width: 375, height: 80))
     }

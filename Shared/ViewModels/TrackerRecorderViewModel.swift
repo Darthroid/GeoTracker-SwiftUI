@@ -27,13 +27,14 @@ class TrackerRecorderViewModel: ObservableObject {
 //		60 * 60		// 1 hour
 	]
 	
-	private var points = [TrackerPoint]()
+//	private var points = [TrackerPoint]()
 	private var trackerManager: TrackerRecordManager?
 
 	//  Coordinates used by StartTrackingViewController to draw polyLine
 	public var storedCoordinates: [CLLocationCoordinate2D] {
-		let coordinates = points.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) })
-		return coordinates
+//		let coordinates = points.map({ CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) })
+//		return coordinates
+		return []
 	}
 
 	@Published public var trackerName: String = ""
@@ -79,18 +80,18 @@ class TrackerRecorderViewModel: ObservableObject {
 	}
 
 	public func saveTrackerData() throws {
-		guard !points.isEmpty else { return }
-		do {
-			try CoreDataManager.shared.insertTracker(withId: UUID().uuidString,
-													 name: self.trackerName,
-													 points: self.points)
-		} catch {
-			throw(error)
-		}
+//		guard !points.isEmpty else { return }
+//		do {
+//			try CoreDataManager.shared.insertTracker(withId: UUID().uuidString,
+//													 name: self.trackerName,
+//													 points: self.points)
+//		} catch {
+//			throw(error)
+//		}
 	}
 
 	private func clean() {
-		self.points.removeAll()
+//		self.points.removeAll()
 		self.trackerName = ""
 		self.selectedFrequencyIndex = 0
 	}
@@ -112,13 +113,13 @@ extension TrackerRecorderViewModel: TrackerRecordManagerDelegate {
 	}
 
 	func trackerRecordingDidTick(_ location: CLLocation) {
-		let point = TrackerPoint()
-		point.id = UUID().uuidString
-		point.latitude = location.coordinate.latitude
-		point.longitude = location.coordinate.longitude
-		point.timestamp = Int64(location.timestamp.timeIntervalSince1970) //Int64(Date().timeIntervalSince1970)
-
-		self.points.append(point)
+//		let point = TrackerPoint()
+//		point.id = UUID().uuidString
+//		point.latitude = location.coordinate.latitude
+//		point.longitude = location.coordinate.longitude
+//		point.timestamp = Int64(location.timestamp.timeIntervalSince1970) //Int64(Date().timeIntervalSince1970)
+//
+//		self.points.append(point)
 		self.locationUpdateHandler(.timerUpdate)
 	}
 

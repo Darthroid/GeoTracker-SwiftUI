@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct TrackerListView: View {
+struct GPXListView: View {
 	enum ActiveSheet {
 		case documentPicker, trackerCreator, none
 	}
@@ -17,7 +17,7 @@ struct TrackerListView: View {
 	@State var showingSheet = false
 	@State var activeSheet: ActiveSheet = .none
 	
-	@ObservedObject var viewModel = TrackerListViewModel()
+	@ObservedObject var viewModel = GPXListViewModel()
 	
 	var addButton: some View {
 		Button(action: {
@@ -53,7 +53,7 @@ struct TrackerListView: View {
 			onDocumentPick: { urls in
 				urls.forEach {
 					do {
-						try viewModel.parseGpxFrom($0)
+						try viewModel.parseGPXFrom($0)
 					} catch {
 						print(error.localizedDescription)
 					}
@@ -64,11 +64,11 @@ struct TrackerListView: View {
 	
     var body: some View {
 		List {
-			ForEach(viewModel.trackers, id: \.self) { tracker in
+			ForEach(viewModel.gpxModels, id: \.self) { gpxModel in
 				NavigationLink(
-					destination: TrackerDetailView(viewModel: tracker)
+					destination: GPXDetailView(viewModel: gpxModel)
 				) {
-					TrackerRow(viewModel: tracker)
+					GPXRow(viewModel: gpxModel)
 //					Text(tracker.description)
 				}
 			}.onDelete { indexSet in
@@ -92,12 +92,12 @@ struct TrackerListView: View {
     }
 	
 	func delete(at offset: IndexSet) {
-		try? viewModel.delete(at: offset)
+		try? viewModel.delete(atOffset: offset)
 	}
 }
 
-struct TrackerListView_Previews: PreviewProvider {
+struct GPXListView_Previews: PreviewProvider {
     static var previews: some View {
-        TrackerListView()
+        GPXListView()
     }
 }
