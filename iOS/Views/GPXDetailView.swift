@@ -9,10 +9,10 @@
 import SwiftUI
 import CoreLocation
 
-struct TrackerDetailView: View {
+struct GPXDetailView: View {
 	@State private var showShareSheet = false
 	
-	var viewModel: TrackerViewModel
+	var viewModel: GPXViewModel
 	
 	var shareButton: some View {
 		Button(action: {
@@ -32,13 +32,8 @@ struct TrackerDetailView: View {
 	
     var body: some View {
 		VStack {
-			MapView(coordinates: viewModel.points.map { $0.toCLLocationCoordinate }, mode: .viewing)
-			List {
-				ForEach(viewModel.points, id: \.self) { point in
-					PointRow(viewModel: point)
-				}
-			}
-			.accessibility(identifier: "PointList")
+			MapView(waypoints: viewModel.waypoints, trackPoints: viewModel.allTrackPoints, mode: .viewing)
+				.edgesIgnoringSafeArea(.bottom)
 		}
 		.navigationBarTitle(Text("\(viewModel.name)"), displayMode: .inline)
 		.navigationBarItems(trailing: shareButton)
@@ -47,6 +42,6 @@ struct TrackerDetailView: View {
 
 struct TrackerDetailView_Previews: PreviewProvider {
     static var previews: some View {
-		TrackerDetailView(viewModel: TrackerViewModel(from: Tracker()))
+		GPXDetailView(viewModel: GPXViewModel(from: GPXEntity()))
     }
 }

@@ -13,7 +13,7 @@ public enum Tab: Int {
 
 	var text: Text {
 		switch self {
-		case .trackerList: return Text("Trackers")
+		case .trackerList: return Text(Bundle.main.displayName)
 		case .settings: return Text("Settings")
 		}
 	}
@@ -40,7 +40,7 @@ struct ContentView: View {
 
 	var body: some View {
 		NavigationView {
-			TrackerListView()
+			GPXListView()
 		}
 	}
 }

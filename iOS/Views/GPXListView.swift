@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct TrackerListView: View {
+struct GPXListView: View {
 	enum ActiveSheet {
 		case documentPicker, trackerCreator, none
 	}
@@ -17,32 +17,26 @@ struct TrackerListView: View {
 	@State var showingSheet = false
 	@State var activeSheet: ActiveSheet = .none
 	
-	@ObservedObject var viewModel = TrackerListViewModel()
+	@ObservedObject var viewModel = GPXListViewModel()
 	
-	var addButton: some View {
-		Button(action: {
-			self.showingActionSheet.toggle()
-		}) {
+	var menu: some View {
+		Menu(content: {
+			Button(action: {
+				showingSheet.toggle()
+			}) {
+				Label("Record track", systemImage: "location.north.line")
+			}
+			Button(action: {
+				activeSheet = .documentPicker
+				showingSheet.toggle()
+			}) {
+				Label("Import GPX file", systemImage: "folder.badge.plus")
+			}
+		}, label: {
 			Image(systemName: "plus.circle.fill")
 				.resizable()
-		}
-		.frame(width: 25, height: 25)
-		.actionSheet(isPresented: $showingActionSheet) {
-			ActionSheet(
-				title: Text(""),
-				buttons: [
-					.default(Text("New tracker")) {
-						activeSheet = .trackerCreator
-						showingSheet.toggle()
-					},
-					.default(Text("Import")) {
-						activeSheet = .documentPicker
-						showingSheet.toggle()
-					},
-					.cancel(Text("Cancel"))
-				]
-			)
-		}
+				.frame(width: 25, height: 25)
+		})
 		.accessibility(identifier: "AddButton")
 	}
 	
@@ -53,7 +47,7 @@ struct TrackerListView: View {
 			onDocumentPick: { urls in
 				urls.forEach {
 					do {
-						try viewModel.parseGpxFrom($0)
+						try viewModel.parseGPXFrom($0)
 					} catch {
 						print(error.localizedDescription)
 					}
@@ -64,11 +58,11 @@ struct TrackerListView: View {
 	
     var body: some View {
 		List {
-			ForEach(viewModel.trackers, id: \.self) { tracker in
+			ForEach(viewModel.gpxModels, id: \.self) { gpxModel in
 				NavigationLink(
-					destination: TrackerDetailView(viewModel: tracker)
+					destination: GPXDetailView(viewModel: gpxModel)
 				) {
-					TrackerRow(viewModel: tracker)
+					GPXRow(viewModel: gpxModel)
 //					Text(tracker.description)
 				}
 			}.onDelete { indexSet in
@@ -77,7 +71,7 @@ struct TrackerListView: View {
 		}
 //		.listStyle(InsetGroupedListStyle())
 		.navigationBarTitle(Tab.trackerList.text)
-		.navigationBarItems(trailing: addButton)
+		.navigationBarItems(trailing: menu)
 		.sheet(isPresented: $showingSheet) {
 			switch self.activeSheet {
 			case .documentPicker:
@@ -92,12 +86,12 @@ struct TrackerListView: View {
     }
 	
 	func delete(at offset: IndexSet) {
-		try? viewModel.delete(at: offset)
+		try? viewModel.delete(atOffset: offset)
 	}
 }
 
-struct TrackerListView_Previews: PreviewProvider {
+struct GPXListView_Previews: PreviewProvider {
     static var previews: some View {
-        TrackerListView()
+        GPXListView()
     }
 }

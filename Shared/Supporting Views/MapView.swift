@@ -13,8 +13,9 @@ struct MapView {
 	enum MapMode {
 		case viewing, recording
 	}
-		
-	@State var coordinates: [CLLocationCoordinate2D] = []
+	
+	@State var waypoints: [Waypoint] = []
+	@State var trackPoints: [TrackPoint] = []
 	
 	var mode: MapMode
 
@@ -29,20 +30,16 @@ struct MapView {
 	}
 	
 	func updateMapView(_ view: MKMapView, context: Context) {
-		self.drawPolyline(view, with: self.coordinates)
+		view.showsScale = true
+		self.drawPolyline(view, with: self.trackPoints.map({ $0.coordinate }))
 		switch self.mode {
 		case .viewing:
-			if let startCoordinate = self.coordinates.first, let finishCoordinate = self.coordinates.last {
+			waypoints.forEach {
 				self.addAnnotation(
 					view,
-					coordinate: startCoordinate,
-					title: "Start"
-				)
-				
-				self.addAnnotation(
-					view,
-					coordinate: finishCoordinate,
-					title: "Finish"
+					coordinate: $0.coordinate,
+					title: $0.name,
+					subtitle: $0.desc
 				)
 			}
 		case .recording:
@@ -55,7 +52,7 @@ struct MapView {
 	///   - coordinates: Coordinates array for drwaing polyline.
 	///   - center: Boolean value indicating whether map needs to be centered on polyline.
 	///   - animated: Boolean value indicating whether centering on polyline should be animated.
-	func drawPolyline(_ view: MKMapView, with coordinates: [CLLocationCoordinate2D], center: Bool = true, animated: Bool = true) {
+	func drawPolyline(_ view: MKMapView, with coordinates: [CLLocationCoordinate2D], center: Bool = true, animated: Bool = false) {
 		view.removeOverlays(view.overlays)
 		let polyLine = MKPolyline(coordinates: coordinates, count: coordinates.count)
 
@@ -67,18 +64,18 @@ struct MapView {
 			let overlays = view.overlays
 			if let topOverlay = overlays.first(where: { $0 is MKPolyline }) {
 				let rect = overlays.reduce(topOverlay.boundingMapRect, { $0.union($1.boundingMapRect) })
-					let edgePadding = UIEdgeInsets(
-						top: 50.0,
-						left: 50.0,
-						bottom: 50.0,
-						right: 50.0
-					)
+				let edgePadding = UIEdgeInsets(
+					top: 50.0,
+					left: 50.0,
+					bottom: 50.0,
+					right: 50.0
+				)
 				
-					view.setVisibleMapRect(
-						rect,
-						edgePadding: edgePadding,
-						animated: animated
-					)
+				view.setVisibleMapRect(
+					rect,
+					edgePadding: edgePadding,
+					animated: animated
+				)
 			}
 		}
 
@@ -164,4 +161,28 @@ extension Coordinator: MKMapViewDelegate {
 		renderer.lineWidth = 4
 		return renderer
 	}
+	
+//	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?{
+//		guard !(annotation is MKUserLocation) else { return nil }
+//		let reuseId = "pin"
+//		var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+//		if pinView == nil {
+//			pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+//		}
+//		pinView?.pinTintColor = UIColor.systemRed
+//		pinView?.canShowCallout = true
+//		let smallSquare = CGSize(width: 30, height: 30)
+//		let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: smallSquare))
+//
+//		button.setBackgroundImage(UIImage(systemName: "info.circle"), for: .normal)
+//		button.addTarget(self, action: #selector(showWaypointInfo), for: .touchUpInside)
+//
+//		pinView?.rightCalloutAccessoryView = button
+//
+//		return pinView
+//	}
+//
+//	@objc func showWaypointInfo(){
+//
+//	}
 }
