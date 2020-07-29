@@ -19,30 +19,24 @@ struct GPXListView: View {
 	
 	@ObservedObject var viewModel = GPXListViewModel()
 	
-	var addButton: some View {
-		Button(action: {
-			self.showingActionSheet.toggle()
-		}) {
+	var menu: some View {
+		Menu(content: {
+			Button(action: {
+				showingSheet.toggle()
+			}) {
+				Label("Record track", systemImage: "location.north.line")
+			}
+			Button(action: {
+				activeSheet = .documentPicker
+				showingSheet.toggle()
+			}) {
+				Label("Import GPX file", systemImage: "folder.badge.plus")
+			}
+		}, label: {
 			Image(systemName: "plus.circle.fill")
 				.resizable()
-		}
-		.frame(width: 25, height: 25)
-		.actionSheet(isPresented: $showingActionSheet) {
-			ActionSheet(
-				title: Text(""),
-				buttons: [
-					.default(Text("New tracker")) {
-						activeSheet = .trackerCreator
-						showingSheet.toggle()
-					},
-					.default(Text("Import")) {
-						activeSheet = .documentPicker
-						showingSheet.toggle()
-					},
-					.cancel(Text("Cancel"))
-				]
-			)
-		}
+				.frame(width: 25, height: 25)
+		})
 		.accessibility(identifier: "AddButton")
 	}
 	
@@ -77,7 +71,7 @@ struct GPXListView: View {
 		}
 //		.listStyle(InsetGroupedListStyle())
 		.navigationBarTitle(Tab.trackerList.text)
-		.navigationBarItems(trailing: addButton)
+		.navigationBarItems(trailing: menu)
 		.sheet(isPresented: $showingSheet) {
 			switch self.activeSheet {
 			case .documentPicker:

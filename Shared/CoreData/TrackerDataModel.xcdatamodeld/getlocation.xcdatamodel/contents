@@ -32,6 +32,7 @@
     </entity>
     <entity name="Waypoint" representedClassName="Waypoint" syncable="YES">
         <attribute name="comment" optional="YES" attributeType="String"/>
+        <attribute name="desc" optional="YES" attributeType="String"/>
         <attribute name="elevation" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -45,6 +46,6 @@
         <element name="Track" positionX="213.9140625" positionY="411.87109375" width="128" height="133"/>
         <element name="TrackPoint" positionX="211.19140625" positionY="749.3125" width="128" height="118"/>
         <element name="TrackSegment" positionX="140.8828125" positionY="635.0859375" width="128" height="73"/>
-        <element name="Waypoint" positionX="-141.7734375" positionY="402.07421875" width="128" height="163"/>
+        <element name="Waypoint" positionX="-141.7734375" positionY="402.07421875" width="128" height="178"/>
     </elements>
 </model>

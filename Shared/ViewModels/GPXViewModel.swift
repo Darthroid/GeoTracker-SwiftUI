@@ -41,7 +41,6 @@ class GPXViewModel: Identifiable {
 		return """
 		\(String(describing: waypoints.count)) waypoints
 		\(String(describing: tracks.count)) tracks
-		\(String(describing: allSegments.count)) segments
 		"""
 	}
 
@@ -67,11 +66,11 @@ extension GPXViewModel {
 	}
 	
 	private func exportAsGPX(save: Bool = true, completionHandler: @escaping (String, URL?) -> Void) {
-//		GPXParseManager.createGPX(fromTracker: self.gpxEntity, save: save, completionHandler: { gpxString, fileUrl in
-//			DispatchQueue.main.async {
-//				completionHandler(gpxString, fileUrl)
-//			}
-//		})
+		GPXParseManager().createGPX(fromEntity: self.gpxEntity, save: save, completionHandler: {  gpxString, fileUrl in
+			DispatchQueue.main.async {
+				completionHandler(gpxString, fileUrl)
+			}
+		})
 	}
 }
 

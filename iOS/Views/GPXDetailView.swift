@@ -32,14 +32,8 @@ struct GPXDetailView: View {
 	
     var body: some View {
 		VStack {
-			// TODO: 
-			MapView(coordinates: viewModel.allTrackPoints.map { $0.coordinate }, mode: .viewing)
-			List {
-//				ForEach(viewModel.points, id: \.self) { point in
-//					PointRow(viewModel: point)
-//				}
-			}
-			.accessibility(identifier: "PointList")
+			MapView(waypoints: viewModel.waypoints, trackPoints: viewModel.allTrackPoints, mode: .viewing)
+				.edgesIgnoringSafeArea(.bottom)
 		}
 		.navigationBarTitle(Text("\(viewModel.name)"), displayMode: .inline)
 		.navigationBarItems(trailing: shareButton)

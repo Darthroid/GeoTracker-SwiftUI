@@ -64,6 +64,11 @@ final class PreviewGenerator {
 	}
 	
 	private func generateSnapShot(coordinates: [CLLocationCoordinate2D], id: String, size: CGSize, completion: @escaping ((UIImage) -> Void)) {
+		guard !coordinates.isEmpty else {
+			completion(UIImage())
+			return
+		}
+		
 		let mapSnapshotOptions = MKMapSnapshotter.Options()
 
 		let polyLine = MKPolyline(coordinates: coordinates, count: coordinates.count)

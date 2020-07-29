@@ -2,7 +2,7 @@
 //  Waypoint+CoreDataProperties.swift
 //  
 //
-//  Created by Oleg Komaristy on 17.07.2020.
+//  Created by Oleg Komaristy on 26.07.2020.
 //
 //
 
@@ -23,6 +23,7 @@ extension Waypoint {
     @NSManaged public var name: String?
     @NSManaged public var speed: Float
     @NSManaged public var time: Int64
+    @NSManaged public var desc: String?
     @NSManaged public var gpxEntity: GPXEntity?
 
 }
