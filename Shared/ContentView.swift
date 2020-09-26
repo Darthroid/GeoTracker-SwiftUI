@@ -17,13 +17,22 @@ public enum Tab: Int {
 		case .settings: return Text("Settings")
 		}
 	}
-
+	// TODO: macOS
+	#if os(macOS)
+	var image: Image {
+		switch self {
+		case .trackerList: return Image("list.bullet")
+		case .settings: return Image("gear")
+		}
+	}
+	#else
 	var image: Image {
 		switch self {
 		case .trackerList: return Image(systemName: "list.bullet")
 		case .settings: return Image(systemName: "gear")
 		}
 	}
+	#endif
 }
 
 struct ContentView: View {

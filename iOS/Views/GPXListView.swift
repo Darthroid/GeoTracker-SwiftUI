@@ -15,13 +15,14 @@ struct GPXListView: View {
 	
 	@State var showingActionSheet = false
 	@State var showingSheet = false
-	@State var activeSheet: ActiveSheet = .none
+	@State var activeSheet: ActiveSheet = .documentPicker
 	
 	@ObservedObject var viewModel = GPXListViewModel()
 	
 	var menu: some View {
 		Menu(content: {
 			Button(action: {
+				activeSheet = .trackerCreator
 				showingSheet.toggle()
 			}) {
 				Label("Record track", systemImage: "location.north.line")

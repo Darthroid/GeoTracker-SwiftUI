@@ -21,7 +21,11 @@ struct MapView {
 
 	func makeMapView() -> MKMapView {
 		let map = MKMapView(frame: .zero)
+		#if os(macOS)
+		map.setAccessibilityIdentifier("MapView")
+		#else
 		map.accessibilityIdentifier = "MapView"
+		#endif
 		return map
 	}
 	
@@ -64,12 +68,21 @@ struct MapView {
 			let overlays = view.overlays
 			if let topOverlay = overlays.first(where: { $0 is MKPolyline }) {
 				let rect = overlays.reduce(topOverlay.boundingMapRect, { $0.union($1.boundingMapRect) })
+				#if os(macOS)
+				let edgePadding = NSEdgeInsets(
+					top: 50.0,
+					left: 50.0,
+					bottom: 50.0,
+					right: 50.0
+				)
+				#else
 				let edgePadding = UIEdgeInsets(
 					top: 50.0,
 					left: 50.0,
 					bottom: 50.0,
 					right: 50.0
 				)
+				#endif
 				
 				view.setVisibleMapRect(
 					rect,
@@ -80,9 +93,13 @@ struct MapView {
 		}
 
 		if animated {
+			#if os(macOS)
+			centerBlock()
+			#else
 			UIView.animate(withDuration: 1.5, animations: {
 				centerBlock()
 			})
+			#endif
 		} else {
 			centerBlock()
 		}

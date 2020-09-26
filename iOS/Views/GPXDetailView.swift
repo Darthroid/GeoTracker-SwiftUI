@@ -9,7 +9,7 @@
 import SwiftUI
 import CoreLocation
 
-struct GPXDetailView: View {
+struct GPXInfoView: View {
 	@State private var showShareSheet = false
 	
 	var viewModel: GPXViewModel
@@ -26,7 +26,52 @@ struct GPXDetailView: View {
 		.accessibility(identifier: "ShareButton")
 		.sheet(isPresented: $showShareSheet) {
 			ShareSheet(activityItems: [viewModel.fileUrl ?? viewModel.gpxString])
-//				.accessibility(identifier: "ShareSheet")
+		}
+	}
+	
+	var body: some View {
+		NavigationView {
+			VStack {
+				TabTopView(menuItems: ["General", "Tracks", "Elevation"])
+					.padding(.bottom, 5)
+				List {
+					Text(viewModel.gpxEntity.name ?? "GPX file")
+					Text(viewModel.gpxEntity.name ?? "GPX file")
+					Text(viewModel.gpxEntity.name ?? "GPX file")
+					Text(viewModel.gpxEntity.name ?? "GPX file")
+					Text(viewModel.gpxEntity.name ?? "GPX file")
+				}
+				.listStyle(InsetListStyle())
+			}
+			.navigationBarTitle(Text(viewModel.gpxEntity.name ?? "GPX file"))
+			.navigationBarItems(trailing: shareButton)
+		}
+	}
+}
+
+struct GPXInfoView_Previews: PreviewProvider {
+	static var previews: some View {
+		GPXInfoView(viewModel: GPXViewModel(from: GPXEntity()))
+	}
+}
+
+struct GPXDetailView: View {
+	@State private var showInfoSheet = false
+	
+	var viewModel: GPXViewModel
+	
+	var infoButton: some View {
+		Button(action: {
+			showInfoSheet.toggle()
+		}) {
+			Image(systemName: "info.circle")
+				.resizable()
+				.frame(width: 25, height: 25)
+		}
+		.accessibility(identifier: "InfoButton")
+		.sheet(isPresented: $showInfoSheet) {
+//			ShareSheet(activityItems: [viewModel.fileUrl ?? viewModel.gpxString])
+			GPXInfoView(viewModel: viewModel)
 		}
 	}
 	
@@ -36,11 +81,11 @@ struct GPXDetailView: View {
 				.edgesIgnoringSafeArea(.bottom)
 		}
 		.navigationBarTitle(Text("\(viewModel.name)"), displayMode: .inline)
-		.navigationBarItems(trailing: shareButton)
+		.navigationBarItems(trailing: infoButton)
 	}
 }
 
-struct TrackerDetailView_Previews: PreviewProvider {
+struct GPXDetailView_Previews: PreviewProvider {
     static var previews: some View {
 		GPXDetailView(viewModel: GPXViewModel(from: GPXEntity()))
     }

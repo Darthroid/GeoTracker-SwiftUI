@@ -71,7 +71,7 @@ public class CoreDataManager {
 	
 	public func insertGpxEntity(_ entity: GPXEntity) throws {
 		self.context.insert(entity)
-		self.event(.insert, ids: [entity.id ?? ""], gpxEntities: [entity])
+		self.event(.insert, ids: [entity.id], gpxEntities: [entity])
 		try self.saveContext()
 	}
 	

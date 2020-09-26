@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+import CoreLocation
 
 extension Waypoint {
 
