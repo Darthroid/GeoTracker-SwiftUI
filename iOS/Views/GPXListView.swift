@@ -70,7 +70,7 @@ struct GPXListView: View {
 				delete(at: indexSet)
 			}
 		}
-//		.listStyle(InsetGroupedListStyle())
+		.listStyle(InsetGroupedListStyle())
 		.navigationBarTitle(Tab.trackerList.text)
 		.navigationBarItems(trailing: menu)
 		.sheet(isPresented: $showingSheet) {

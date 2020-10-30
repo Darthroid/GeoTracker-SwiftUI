@@ -31,19 +31,32 @@ struct GPXInfoView: View {
 	
 	var body: some View {
 		NavigationView {
-			VStack {
-				TabTopView(menuItems: ["General", "Tracks", "Elevation"])
-					.padding(.bottom, 5)
-				List {
-					Text(viewModel.gpxEntity.name ?? "GPX file")
-					Text(viewModel.gpxEntity.name ?? "GPX file")
-					Text(viewModel.gpxEntity.name ?? "GPX file")
-					Text(viewModel.gpxEntity.name ?? "GPX file")
-					Text(viewModel.gpxEntity.name ?? "GPX file")
+			List {
+				Text("Created: \(viewModel.gpxEntity.time)")	// TODO: int64 to readable date
+				Text("Author: " + (viewModel.gpxEntity.author ?? "Unknown"))
+				Text("URL: " + (viewModel.gpxEntity.url ?? "Empty"))
+				Text("Email: " + (viewModel.gpxEntity.url ?? "Empty"))
+				VStack(alignment: .leading) {
+					Text("Tracks")
+						.font(.headline)
+						.padding(.bottom)
+					Text("\(viewModel.tracks.count) tracks")
 				}
-				.listStyle(InsetListStyle())
+				VStack(alignment: .leading) {
+					Text("Waypoints")
+						.font(.headline)
+						.padding(.bottom)
+					Text("\(viewModel.waypoints.count) waypoints")
+				}
+				VStack(alignment: .leading) {
+					Text("Description")
+						.font(.headline)
+						.padding(.bottom)
+					Text(viewModel.gpxEntity.desc ?? "Empty")
+				}
 			}
-			.navigationBarTitle(Text(viewModel.gpxEntity.name ?? "GPX file"))
+			.listStyle(InsetListStyle())
+			.navigationBarTitle(Text(viewModel.gpxEntity.name ?? "GPX file"), displayMode: .inline)
 			.navigationBarItems(trailing: shareButton)
 		}
 	}
