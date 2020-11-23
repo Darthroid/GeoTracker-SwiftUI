@@ -19,35 +19,35 @@ public protocol CoreDataObserver: class {
 public class CoreDataManager {
     public static var shared = CoreDataManager()
 
-	private let persistentContainer: NSPersistentContainer!
-
-	private var observations = [ObjectIdentifier: Observation]()
-
-    public var context: NSManagedObjectContext {
-        return self.persistentContainer.viewContext
-    }
-
-	init() {
+	public var persistentContainer: NSPersistentContainer = {
 		let bundle = Bundle(identifier: "com.darthroid.GeoTracker-SwiftUI")
 
 		let modelURL = bundle!.url(forResource: "TrackerDataModel", withExtension: "momd")!
 		guard let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL) else {
-			fatalError("Could not create managedObjectModel")
+			fatalError("CoreDataManager: Could not create managedObjectModel")
 		}
 
-		self.persistentContainer = NSPersistentContainer(name: "TrackerDataModel",
-														 managedObjectModel: managedObjectModel)
-	}
+		let persistentContainer = NSPersistentContainer(
+			name: "TrackerDataModel",
+			managedObjectModel: managedObjectModel
+		)
+		
+		persistentContainer.loadPersistentStores { _, error in
+			if let error = error {
+				print("CoreDataManager: could not load store \(error.localizedDescription)")
+				return
+			}
+			print("CoreDataManager: store loaded")
+		}
+		
+		return persistentContainer
+	}()
 
-    public func initalizeStack(completion: @escaping () -> Void) {
-        self.persistentContainer.loadPersistentStores { _, error in
-            if let error = error {
-                print("could not load store \(error.localizedDescription)")
-                return
-            }
-            print(self, #function, "store loaded")
-        }
-    }
+	private var observations = [ObjectIdentifier: Observation]()
+
+	init() {
+		
+	}
 
     func setStore(type: String) {
         let description = NSPersistentStoreDescription()
@@ -61,22 +61,39 @@ public class CoreDataManager {
         self.persistentContainer.persistentStoreDescriptions = [description]
     }
 	
-	private func saveContext() throws {
-		if self.context.hasChanges {
-			try self.context.save()
+	public func saveContext(_ context: NSManagedObjectContext) {
+		if context.hasChanges {
+			do {
+				try context.save()
+			} catch {
+				let nserror = error as NSError
+				fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+			}
+		}
+	}
+	
+	public func saveContext() {
+		let context = persistentContainer.viewContext
+		if context.hasChanges {
+			do {
+				try context.save()
+			} catch {
+				let nserror = error as NSError
+				fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+			}
 		}
 	}
 
     // MARK: - Create (Insert)
 	
-	public func insertGpxEntity(_ entity: GPXEntity) throws {
-		self.context.insert(entity)
+	public func insertGpxEntity(_ context: NSManagedObjectContext , _ entity: GPXEntity) throws {
+		context.insert(entity)
 		self.event(.insert, ids: [entity.id], gpxEntities: [entity])
-		try self.saveContext()
+		self.saveContext(context)
 	}
 	
-	public func insertGpxEntity(with id: String, author: String? = nil, description: String? = nil, email: String? = nil, name: String? = nil, time: Int64? = nil, url: String? = nil, waypoints: [Waypoint] = [], tracks: [Track] = []) throws {
-		let entity = GPXEntity(context: self.context)
+	public func insertGpxEntity(_ context: NSManagedObjectContext, with id: String, author: String? = nil, description: String? = nil, email: String? = nil, name: String? = nil, time: Int64? = nil, url: String? = nil, waypoints: [Waypoint] = [], tracks: [Track] = []) throws {
+		let entity = GPXEntity(context: context)
 		
 		entity.id = id
 		entity.author = author
@@ -89,74 +106,74 @@ public class CoreDataManager {
 		waypoints.forEach { entity.addToWaypoints($0) }
 		tracks.forEach { entity.addToTracks($0) }
 		
-		try self.insertGpxEntity(entity)
+		try self.insertGpxEntity(context, entity)
 	}
 	
-	public func insertWayPoints(entityId: String, waypoints: [Waypoint]) throws {
-		guard let entity = try self.fetchGPXEntites(with: entityId).first else { return }
+	public func insertWayPoints(_ context: NSManagedObjectContext, entityId: String, waypoints: [Waypoint]) throws {
+		guard let entity = try self.fetchGPXEntites(context, with: entityId).first else { return }
 		
 		waypoints.forEach {
 			entity.addToWaypoints($0)
 		}
 		
-		self.context.refresh(entity, mergeChanges: true)
+		context.refresh(entity, mergeChanges: true)
 //		self.event(.insert, ids: [tracker.id], trackers: [tracker])
-		try self.saveContext()
+		self.saveContext(context)
 	}
 	
-	public func insertTracks(entityId: String, tracks: [Track]) throws {
-		guard let entity = try self.fetchGPXEntites(with: entityId).first else { return }
+	public func insertTracks(_ context: NSManagedObjectContext, entityId: String, tracks: [Track]) throws {
+		guard let entity = try self.fetchGPXEntites(context, with: entityId).first else { return }
 		
 		tracks.forEach {
 			entity.addToTracks($0)
 		}
 		
-		self.context.refresh(entity, mergeChanges: true)
+		context.refresh(entity, mergeChanges: true)
 //		self.event(.insert, ids: [tracker.id], trackers: [tracker])
-		try self.saveContext()
+		self.saveContext(context)
 	}
     // MARK: - Read (Fetch)
 	
-	public func fetchGPXEntities() throws -> [GPXEntity] {
+	public func fetchGPXEntities(_ context: NSManagedObjectContext) throws -> [GPXEntity] {
 		let request = GPXEntity.fetchRequest() as NSFetchRequest<GPXEntity>
 //		request.returnsObjectsAsFaults = false
-		let entities = try self.context.fetch(request)
+		let entities = try context.fetch(request)
 		return entities
 	}
 	
-	public func fetchGPXEntites(with id: String) throws -> [GPXEntity] {
+	public func fetchGPXEntites(_ context: NSManagedObjectContext, with id: String) throws -> [GPXEntity] {
 		let request = NSFetchRequest<GPXEntity>(entityName: "GPXEntity")
 		request.predicate = NSPredicate(format: "id == %@", id)
 //		request.returnsObjectsAsFaults = false
-		let entities = try self.context.fetch(request)
+		let entities = try context.fetch(request)
 		return entities
 	}
 	
-	public func fetchGPXEntities(with name: String) throws -> [GPXEntity] {
+	public func fetchGPXEntities(_ context: NSManagedObjectContext, with name: String) throws -> [GPXEntity] {
 		let request = NSFetchRequest<GPXEntity>(entityName: "GPXEntity")
 		request.predicate = NSPredicate(format: "name == %@", name)
 //		request.returnsObjectsAsFaults = false
-		let entities = try self.context.fetch(request)
+		let entities = try context.fetch(request)
 		return entities
 	}
 
     // MARK: - Delete
 	
-	public func deleteGPXEntity(entity: GPXEntity) throws {
-		self.context.delete(entity)
+	public func deleteGPXEntity(_ context: NSManagedObjectContext, entity: GPXEntity) throws {
+		context.delete(entity)
 		self.event(.delete, ids: [entity.id], gpxEntities: [entity])
-		try self.saveContext()
+		self.saveContext(context)
 	}
 	
-	public func deleteGPXEntity(withId id: String) throws {
+	public func deleteGPXEntity(_ context: NSManagedObjectContext, withId id: String) throws {
 		let fetchRequest = GPXEntity.fetchRequest() as NSFetchRequest<NSFetchRequestResult>
 		fetchRequest.predicate = NSPredicate(format: "id == %@", id)
 
 		let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
 		
-		try self.context.execute(deleteRequest)
+		try context.execute(deleteRequest)
 		self.event(.delete, ids: [id], gpxEntities: [])
-		try self.saveContext()
+		self.saveContext(context)
 	}
 }
 

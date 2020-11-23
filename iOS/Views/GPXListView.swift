@@ -17,6 +17,8 @@ struct GPXListView: View {
 	@State var showingSheet = false
 	@State var activeSheet: ActiveSheet = .documentPicker
 	
+	@Environment(\.managedObjectContext) var moc
+	
 	@ObservedObject var viewModel = GPXListViewModel()
 	
 	var menu: some View {
@@ -48,7 +50,7 @@ struct GPXListView: View {
 			onDocumentPick: { urls in
 				urls.forEach {
 					do {
-						try viewModel.parseGPXFrom($0)
+						try viewModel.parseGPXFrom($0, context: moc)
 					} catch {
 						print(error.localizedDescription)
 					}
@@ -73,6 +75,9 @@ struct GPXListView: View {
 		.listStyle(InsetGroupedListStyle())
 		.navigationBarTitle(Tab.trackerList.text)
 		.navigationBarItems(trailing: menu)
+		.onAppear {
+			viewModel.fetchEntities(moc)
+		}
 		.sheet(isPresented: $showingSheet) {
 			switch self.activeSheet {
 			case .documentPicker:
@@ -87,7 +92,7 @@ struct GPXListView: View {
     }
 	
 	func delete(at offset: IndexSet) {
-		try? viewModel.delete(atOffset: offset)
+		try? viewModel.delete(moc, atOffset: offset)
 	}
 }
 

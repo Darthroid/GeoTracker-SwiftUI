@@ -807,7 +807,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.16;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.darthroid.GeoTracker-SwiftUI";
 				PRODUCT_NAME = "GeoTracker-SwiftUI";
 				SDKROOT = macosx;
@@ -831,7 +831,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.16;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.darthroid.GeoTracker-SwiftUI";
 				PRODUCT_NAME = "GeoTracker-SwiftUI";
 				SDKROOT = macosx;
@@ -984,7 +984,7 @@
 			repositoryURL = "https://github.com/vincentneo/CoreGPX";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.8.0;
+				minimumVersion = 0.8.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

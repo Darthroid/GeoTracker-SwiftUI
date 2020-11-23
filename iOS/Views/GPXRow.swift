@@ -18,6 +18,8 @@ struct GPXRow: View {
 	@State var image = UIImage()
 	#endif
 	
+	@Environment(\.managedObjectContext) var moc
+	
 	var viewModel: GPXViewModel
 	
 	#if os(macOS)

@@ -8,47 +8,47 @@
 
 import Foundation
 import Combine
-//import GeoTrackerCore
+import CoreData
 
 class GPXListViewModel: ObservableObject {
 	@Published private(set) var gpxModels = [GPXViewModel]()
 
 	public init() {
 		self.subscribeForDbEvents()
-		self.fetchEntities()
+//		self.fetchEntities()
 	}
 
 	public func subscribeForDbEvents() {
 		CoreDataManager.shared.addObserver(self)
 	}
 	
-	public func fetchEntities() {
+	public func fetchEntities(_ context: NSManagedObjectContext) {
 		do {
-			let entities = try CoreDataManager.shared.fetchGPXEntities()
+			let entities = try CoreDataManager.shared.fetchGPXEntities(context)
 			self.gpxModels = entities.map { GPXViewModel(from: $0) }
 		} catch {
 			assert(false, error.localizedDescription)
 		}
 	}
 	
-	public func deleteEntity(_ entity: GPXEntity) throws {
-		try CoreDataManager.shared.deleteGPXEntity(entity: entity)
+	public func deleteEntity(_ context: NSManagedObjectContext,_ entity: GPXEntity) throws {
+		try CoreDataManager.shared.deleteGPXEntity(context, entity: entity)
 	}
 
 	
-	public func delete(atOffset offset: IndexSet) throws {
+	public func delete(_ context: NSManagedObjectContext, atOffset offset: IndexSet) throws {
 		guard !self.gpxModels.isEmpty else { return }
 		let indexes = Array(offset)
 		
 		try indexes.forEach {
-			try self.deleteEntity(self.gpxModels[$0].gpxEntity)
+			try self.deleteEntity(context, self.gpxModels[$0].gpxEntity)
 		}
 	}
 	
-	public func parseGPXFrom(_ url: URL) throws {
+	public func parseGPXFrom(_ url: URL, context: NSManagedObjectContext) throws {
 		do {
-			let entity = try GPXParseManager().parseGPX(fromUrl: url)
-			try CoreDataManager.shared.insertGpxEntity(entity)
+			let entity = try GPXParseManager().parseGPX(fromUrl: url, context: context)
+			try CoreDataManager.shared.insertGpxEntity(context, entity)
 		}
 	}
 }

@@ -12,6 +12,8 @@ import CoreLocation
 struct GPXInfoView: View {
 	@State private var showShareSheet = false
 	
+	@Environment(\.managedObjectContext) var moc
+	
 	var viewModel: GPXViewModel
 	
 	var shareButton: some View {
@@ -71,6 +73,8 @@ struct GPXInfoView_Previews: PreviewProvider {
 struct GPXDetailView: View {
 	@State private var showInfoSheet = false
 	
+	@Environment(\.managedObjectContext) var moc
+	
 	var viewModel: GPXViewModel
 	
 	var infoButton: some View {
@@ -85,6 +89,7 @@ struct GPXDetailView: View {
 		.sheet(isPresented: $showInfoSheet) {
 //			ShareSheet(activityItems: [viewModel.fileUrl ?? viewModel.gpxString])
 			GPXInfoView(viewModel: viewModel)
+				.environment(\.managedObjectContext, moc)
 		}
 	}
 	

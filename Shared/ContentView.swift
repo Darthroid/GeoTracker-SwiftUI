@@ -39,6 +39,8 @@ struct ContentView: View {
 	
 	@State private var selectedTab = Tab.trackerList
 	@State var showSheetView = false
+	
+	@Environment(\.managedObjectContext) var moc
 
 	private func tabBarItem(_ tab: Tab) -> some View {
 		VStack {
@@ -50,6 +52,7 @@ struct ContentView: View {
 	var body: some View {
 		NavigationView {
 			GPXListView()
+				.environment(\.managedObjectContext, moc)
 		}
 	}
 }

@@ -6,14 +6,32 @@
 //
 
 import SwiftUI
-#if !os(macOS)
 @main
 struct GeoTracker_SwiftUIApp: App {
+	#if os(macOS)
+	@NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+	#else
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+	#endif
+	@Environment(\.scenePhase) private var scenePhase
 	
 	var body: some Scene {
 		WindowGroup {
 			ContentView()
+				.environment(\.managedObjectContext, CoreDataManager.shared.persistentContainer.viewContext)
+				.onChange(of: scenePhase) { phase in
+					switch phase {
+					case .active:
+						print("SncenePhase -> active")
+					case .inactive:
+						print("SncenePhase -> inactive")
+					case .background:
+						print("SncenePhase -> background")
+						CoreDataManager.shared.saveContext()
+					@unknown default:
+						print("SncenePhase -> unknown")
+					}
+				}
 				.onAppear {
 					if CommandLine.arguments.contains("--uitesting") {
 						// reset state (clear UserDefaults, etc)
@@ -21,52 +39,57 @@ struct GeoTracker_SwiftUIApp: App {
 //						UserDefaults.standard.removePersistentDomain(forName: defaultsName)
 					}
 				}
+		}.commands {
+			CommandGroup(replacing: .newItem) {
+//			CommandMenu("Utilities") {
+				Button(action: {}) {
+					Text("New")
+				}.keyboardShortcut("n", modifiers: .command)
+				
+				Button(action: openDocument) {
+					Text("Open")
+				}.keyboardShortcut("o", modifiers: .command)
+			}
 		}
+	}
+	
+	func openDocument() {
+		#if os(macOS)
+		let panel = NSOpenPanel()
+		panel.allowedFileTypes = DOC_TYPES
+		panel.canChooseDirectories = false
+		panel.canCreateDirectories = false
+		panel.allowsMultipleSelection = true
+		let result = panel.runModal()
+		let context = CoreDataManager.shared.persistentContainer.viewContext
+		if result == .OK {
+			panel.urls.forEach {
+				do {
+					let entity = try GPXParseManager()
+						.parseGPX(
+							fromUrl: $0,
+							context: context
+						)
+					try CoreDataManager.shared.insertGpxEntity(context, entity)
+				} catch {
+					print(error.localizedDescription)
+				}
+			}
+		}
+		#endif
 	}
 }
 
-class AppDelegate: NSObject, UIApplicationDelegate {
-	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-		CoreDataManager.shared.initalizeStack {}
-		return true
+#if os(macOS)
+class AppDelegate: NSObject, NSApplicationDelegate {
+	func applicationDidFinishLaunching(_ notification: Notification) {
+		
 	}
 }
 #else
-// A newly-created iOS project using the Swift language may no longer build after enabling Mac Catalyst. (67885114)
-@NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
-
-	var window: NSWindow!
-
-
-	func applicationDidFinishLaunching(_ aNotification: Notification) {
-		// Create the SwiftUI view that provides the window contents.
-		let contentView = ContentView()
-
-		// Create the window and set the content view.
-		window = NSWindow(
-			contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
-			styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
-			backing: .buffered, defer: false)
-		window.isReleasedWhenClosed = false
-		window.center()
-		window.setFrameAutosaveName("Main Window")
-		window.contentView = NSHostingView(rootView: contentView)
-		window.makeKeyAndOrderFront(nil)
+class AppDelegate: NSObject, UIApplicationDelegate {
+	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+		return true
 	}
-
-	func applicationWillTerminate(_ aNotification: Notification) {
-		// Insert code here to tear down your application
-	}
-
-
 }
-
 #endif
-//
-//class AppDelegate: NSObject, UIApplicationDelegate {
-//	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-//		CoreDataManager.shared.initalizeStack {}
-//		return true
-//	}
-//}

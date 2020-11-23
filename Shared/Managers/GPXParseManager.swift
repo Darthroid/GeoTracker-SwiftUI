@@ -8,18 +8,19 @@
 
 import Foundation
 import CoreGPX
+import CoreData
 
 public class GPXParseManager {
 	
 	/// Creates GPXEntity from contents of file.
 	/// - Parameter url: A URL where  GPX file located at.
 	/// - Returns: GPXEntity created from file.
-	public func parseGPX(fromUrl url: URL) throws -> GPXEntity {
+	public func parseGPX(fromUrl url: URL, context: NSManagedObjectContext) throws -> GPXEntity {
 		_ = url.startAccessingSecurityScopedResource()
 		guard let gpx = GPXParser(withURL: url)?.parsedData() else {
 			throw NSError(domain: "Unable to parse gpx from path: \(url)", code: 1, userInfo: nil)
 		}
-		let entity = GPXEntity()
+		let entity = GPXEntity(context: context)
 		let metadata = gpx.metadata
 		
 		entity.id = UUID().uuidString
@@ -30,8 +31,8 @@ public class GPXParseManager {
 		entity.url = metadata?.author?.link?.text
 		entity.time = Int64(metadata?.time?.timeIntervalSince1970 ?? Date().timeIntervalSince1970)
 		
-		entity.waypoints = NSOrderedSet(array: self.parseWaypoints(gpx))
-		entity.tracks = NSSet(array: self.parseTracks(gpx))
+		entity.waypoints = NSOrderedSet(array: self.parseWaypoints(gpx, context: context))
+		entity.tracks = NSSet(array: self.parseTracks(gpx, context: context))
 		
 		return entity
 	}
@@ -79,10 +80,10 @@ public class GPXParseManager {
 	
 	// MARK: - Private methods for parsing from gpx to GPXEntity
 	
-	private func parseWaypoints(_ gpx: GPXRoot) -> [Waypoint] {
+	private func parseWaypoints(_ gpx: GPXRoot, context: NSManagedObjectContext) -> [Waypoint] {
 		var waypoints = [Waypoint]()
 		gpx.waypoints.forEach {
-			let waypoint = Waypoint()
+			let waypoint = Waypoint(context: context)
 			guard let latitude = $0.latitude, let longitude = $0.longitude else { return }
 			
 			waypoint.latitude = latitude
@@ -101,13 +102,13 @@ public class GPXParseManager {
 		return waypoints
 	}
 	
-	private func parseTracks(_ gpx: GPXRoot) -> [Track] {
+	private func parseTracks(_ gpx: GPXRoot, context: NSManagedObjectContext) -> [Track] {
 		var tracks = [Track]()
 		gpx.tracks.forEach {
-			let track = Track()
+			let track = Track(context: context)
 			track.name = $0.name
 			track.desc = $0.desc
-			track.segments = NSOrderedSet(array: self.parseTrackSegments($0.tracksegments))
+			track.segments = NSOrderedSet(array: self.parseTrackSegments($0.tracksegments, context: context))
 			
 			tracks.append(track)
 		}
@@ -115,12 +116,12 @@ public class GPXParseManager {
 		return tracks
 	}
 	
-	private func parseTrackSegments(_ segments: [GPXTrackSegment]) -> [TrackSegment] {
+	private func parseTrackSegments(_ segments: [GPXTrackSegment], context: NSManagedObjectContext) -> [TrackSegment] {
 		var _segments = [TrackSegment]()
 		
 		segments.forEach {
-			let segment = TrackSegment()
-			segment.trackpoints = NSOrderedSet(array: self.parseTrackPoints($0.trackpoints))
+			let segment = TrackSegment(context: context)
+			segment.trackpoints = NSOrderedSet(array: self.parseTrackPoints($0.trackpoints, context: context))
 			
 			_segments.append(segment)
 		}
@@ -128,11 +129,11 @@ public class GPXParseManager {
 		return _segments
 	}
 	
-	private func parseTrackPoints(_ trackPoints: [GPXTrackPoint]) -> [TrackPoint] {
+	private func parseTrackPoints(_ trackPoints: [GPXTrackPoint], context: NSManagedObjectContext) -> [TrackPoint] {
 		var _trackPoints = [TrackPoint]()
 		
 		trackPoints.forEach {
-			let trackPoint = TrackPoint()
+			let trackPoint = TrackPoint(context: context)
 			guard let latitude = $0.latitude, let longitude = $0.longitude else { return }
 			trackPoint.latitude = latitude
 			trackPoint.longitude = longitude
