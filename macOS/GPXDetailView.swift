@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct GPXDetailView: View {
-    var body: some View {
-        Text("Tracker detail")
-    }
+	var viewModel: GPXViewModel
+	
+	var body: some View {
+		VStack {
+			MapView(waypoints: viewModel.waypoints, trackPoints: viewModel.allTrackPoints, mode: .viewing)
+		}
+	}
 }
 
 struct TrackerDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        GPXDetailView()
-    }
+	static var previews: some View {
+		let moc = CoreDataManager.shared.persistentContainer.viewContext
+		GPXDetailView(viewModel: GPXViewModel(from: GPXEntity(context: moc)))
+			.environment(\.managedObjectContext, moc)
+	}
 }

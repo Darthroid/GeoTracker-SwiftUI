@@ -13,6 +13,7 @@
 		D163DE4724CC30FE00A74A56 /* PointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163DE4624CC30FE00A74A56 /* PointProtocol.swift */; };
 		D163DE4824CC30FE00A74A56 /* PointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163DE4624CC30FE00A74A56 /* PointProtocol.swift */; };
 		D163DE4B24D6030900A74A56 /* TabTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163DE4A24D6030900A74A56 /* TabTopView.swift */; };
+		D17CAA5D256C4C1F009A10E3 /* GPXRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B45B8F24B05DFA004FA0D3 /* GPXRow.swift */; };
 		D18D361B24BF6098009668DB /* CreateTrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18D361A24BF6098009668DB /* CreateTrackerView.swift */; };
 		D19A168624C78D1D0031F031 /* GPXEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A168524C78D1D0031F031 /* GPXEntity+CoreDataProperties.swift */; };
 		D19A168724C78D1D0031F031 /* GPXEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A168524C78D1D0031F031 /* GPXEntity+CoreDataProperties.swift */; };
@@ -218,6 +219,7 @@
 			children = (
 				D1B45BA024B06156004FA0D3 /* Constant.swift */,
 				D1B45AF624B05B71004FA0D3 /* ContentView.swift */,
+				D1B45B8F24B05DFA004FA0D3 /* GPXRow.swift */,
 				D1B45AF524B05B71004FA0D3 /* GeoTracker_SwiftUIApp.swift */,
 				D1B45AF724B05B72004FA0D3 /* Assets.xcassets */,
 				D1B45B5B24B05C19004FA0D3 /* CoreData */,
@@ -348,7 +350,6 @@
 				D1B45B8E24B05DFA004FA0D3 /* GPXDetailView.swift */,
 				D1B45B9224B05DFA004FA0D3 /* GPXListView.swift */,
 				D1B45B8D24B05DFA004FA0D3 /* TrackerRecorderView.swift */,
-				D1B45B8F24B05DFA004FA0D3 /* GPXRow.swift */,
 				D18D361A24BF6098009668DB /* CreateTrackerView.swift */,
 			);
 			path = Views;
@@ -599,6 +600,7 @@
 				D1B45BA924B06DEA004FA0D3 /* GPXListView.swift in Sources */,
 				D1CC498E24C23F0000006E07 /* TrackPoint+CoreDataClass.swift in Sources */,
 				D1B45B1F24B05B72004FA0D3 /* GeoTracker_SwiftUIApp.swift in Sources */,
+				D17CAA5D256C4C1F009A10E3 /* GPXRow.swift in Sources */,
 				D1B45B6524B05C41004FA0D3 /* CoreDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

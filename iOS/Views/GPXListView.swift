@@ -98,6 +98,8 @@ struct GPXListView: View {
 
 struct GPXListView_Previews: PreviewProvider {
     static var previews: some View {
+		let moc = CoreDataManager.shared.persistentContainer.viewContext
         GPXListView()
+			.environment(\.managedObjectContext, moc)
     }
 }

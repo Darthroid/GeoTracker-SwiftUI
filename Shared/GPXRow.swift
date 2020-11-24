@@ -38,6 +38,7 @@ struct GPXRow: View {
 	
     var body: some View {
 		HStack {
+			#if os(iOS)
 			if isGenerating {
 				ZStack {
 					// set placeholder ?
@@ -50,6 +51,7 @@ struct GPXRow: View {
 				imageView
 					.padding(.trailing, 5)
 			}
+			#endif
 			
 			VStack(alignment: .leading) {
 				Text(viewModel.name)
@@ -65,6 +67,7 @@ struct GPXRow: View {
     }
 	
 	func generatePreview() {
+		#if os(iOS)
 		let size = CGSize(width: 50, height: 50)
 		isGenerating = true
 		var coordinates = [CLLocationCoordinate2D]()
@@ -80,15 +83,18 @@ struct GPXRow: View {
 			
 			image = preview
 		})
+		#endif
 	}
 }
 
 struct GPXRow_Previews: PreviewProvider {
     static var previews: some View {
+		let moc = CoreDataManager.shared.persistentContainer.viewContext
 		GPXRow(
-			viewModel: GPXViewModel(from: GPXEntity())
+			viewModel: GPXViewModel(from: GPXEntity(context: moc))
 		)
 		.previewLayout(.fixed(width: 375, height: 80))
+		.environment(\.managedObjectContext, moc)
     }
 }
 //#endif

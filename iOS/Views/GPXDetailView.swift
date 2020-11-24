@@ -105,6 +105,8 @@ struct GPXDetailView: View {
 
 struct GPXDetailView_Previews: PreviewProvider {
     static var previews: some View {
-		GPXDetailView(viewModel: GPXViewModel(from: GPXEntity()))
+		let moc = CoreDataManager.shared.persistentContainer.viewContext
+		GPXDetailView(viewModel: GPXViewModel(from: GPXEntity(context: moc)))
+			.environment(\.managedObjectContext, moc)
     }
 }

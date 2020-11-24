@@ -11,62 +11,26 @@ struct GPXListView: View {
 	enum ActiveSheet {
 		case trackerCreator, none
 	}
-	
-	@State var showingActionSheet = false
-	@State var showingSheet = false
-	@State var activeSheet: ActiveSheet = .trackerCreator
-	
+		
 	@ObservedObject var viewModel = GPXListViewModel()
 	
 	@Environment(\.managedObjectContext) var moc
 	
-	var menu: some View {
-		Menu(content: {
-			Button(action: {
-				activeSheet = .trackerCreator
-				showingSheet.toggle()
-			}) {
-				Label("Create track", systemImage: "location.north.line")
-			}
-			Button(action: {
-				
-			}) {
-				Label("Import GPX file", systemImage: "folder.badge.plus")
-			}
-		}, label: {
-			Image(systemName: "plus.circle.fill")
-				.resizable()
-				.frame(width: 25, height: 25)
-		})
-		.accessibility(identifier: "AddButton")
-	}
-	
 	var body: some View {
 		List {
 			ForEach(viewModel.gpxModels, id: \.self) { gpxModel in
-//				NavigationLink(
-//					destination: GPXDetailView(viewModel: gpxModel)
-//				) {
-//					GPXRow(viewModel: gpxModel)
-					Text(gpxModel.description)
-//				}
+				NavigationLink(
+					destination: GPXDetailView(viewModel: gpxModel)
+				) {
+					GPXRow(viewModel: gpxModel)
+				}
 			}.onDelete { indexSet in
 				delete(at: indexSet)
 			}
 		}
-		.navigationTitle(Tab.trackerList.text)
-//		.navigationBarTitle(Tab.trackerList.text)
-//		.navigationBarItems(trailing: menu)
+		.frame(minWidth: 225, maxWidth: 300)
 		.onAppear {
 			viewModel.fetchEntities(moc)
-		}
-		.sheet(isPresented: $showingSheet) {
-			switch self.activeSheet {
-//			case .trackerCreator:
-//				CreateTrackerView()
-			default:
-				fatalError("Incorrect active sheet")
-			}
 		}
 		.accessibility(identifier: "TrackerList")
 	}
@@ -96,6 +60,8 @@ struct GPXListView: View {
 
 struct GPXListView_Previews: PreviewProvider {
 	static var previews: some View {
+		let moc = CoreDataManager.shared.persistentContainer.viewContext
 		GPXListView()
+			.environment(\.managedObjectContext, moc)
 	}
 }
