@@ -10,6 +10,8 @@ import SwiftUI
 struct GPXDetailView: View {
 	var viewModel: GPXViewModel
 	
+	@Environment(\.managedObjectContext) var moc
+	
 	var body: some View {
 		VStack {
 			MapView(waypoints: viewModel.waypoints, trackPoints: viewModel.allTrackPoints, mode: .viewing)

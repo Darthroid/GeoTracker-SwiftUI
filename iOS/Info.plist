@@ -38,7 +38,7 @@
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
-		<true/>
+		<false/>
 	</dict>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
@@ -67,6 +67,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.xml</string>
+				<string>public.file-url</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>GPS Exchange Format (GPX)</string>
@@ -91,6 +92,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.xml</string>
+				<string>public.file-url</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>GPS Exchange Format (GPX)</string>

@@ -40,6 +40,7 @@ struct GeoTracker_SwiftUIApp: App {
 					}
 				}
 		}.commands {
+			SidebarCommands()
 			CommandGroup(replacing: .newItem) {
 //			CommandMenu("Utilities") {
 				Button(action: {}) {

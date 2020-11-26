@@ -26,12 +26,18 @@ struct GPXListView: View {
 				}
 			}.onDelete { indexSet in
 				delete(at: indexSet)
-			}
+			}.onDrop(
+				of: DOC_TYPES,
+				isTargeted: nil,
+				perform: { (items) -> Bool in
+					return processDrop(items: items)
+				}
+			)
 		}
-		.frame(minWidth: 225, maxWidth: 300)
 		.onAppear {
 			viewModel.fetchEntities(moc)
 		}
+		.listStyle(SidebarListStyle())
 		.accessibility(identifier: "TrackerList")
 	}
 	
@@ -55,6 +61,27 @@ struct GPXListView: View {
 				}
 			}
 		}
+	}
+	
+	func processDrop(items: [NSItemProvider]) -> Bool {
+		guard !items.isEmpty else { return false }
+		items.forEach { item in
+			guard let identifier = item.registeredTypeIdentifiers.first,
+				  DOC_TYPES.contains(identifier)
+			else { return }
+			
+			item.loadItem(forTypeIdentifier: identifier, options: nil) { (urlData, error) in
+				DispatchQueue.main.async {
+					if let urlData = urlData as? Data {
+						let url = NSURL(absoluteURLWithDataRepresentation: urlData, relativeTo: nil) as URL
+						try? viewModel.parseGPXFrom(url, context: moc)
+					}
+				}
+			}
+			
+		}
+		
+		return true
 	}
 }
 

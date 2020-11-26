@@ -11,8 +11,4 @@ import Foundation
 // UI
 public let ERROR_TITLE = "Error"
 public let WARNING_TITLE = "Warning"
-#if !os(macOS)
-public let DOC_TYPES = ["com.topografix.gpx"]
-#else
-public let DOC_TYPES = ["gpx"]
-#endif
+public let DOC_TYPES = ["com.topografix.gpx", "gpx", "public.url","public.file-url"]
